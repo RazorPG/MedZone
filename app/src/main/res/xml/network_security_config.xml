@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Default: do not allow cleartext -->
+    <base-config cleartextTrafficPermitted="false" />
+
+    <!-- Allow cleartext only for the specific IP used by your API -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.91.48.175</domain>
+    </domain-config>
+
+    <!-- Optional: during debug you may want broader trust, but keep minimal for production -->
+</network-security-config>
