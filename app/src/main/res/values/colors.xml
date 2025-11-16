@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textColorPrimary">#1A1A1A</color>
+    <color name="textColorSecondary">#6B7280</color>
+
+    <!-- Colors extracted from layouts -->
+    <color name="gray_dark">#374151</color>
+    <color name="hint_color">#717182</color>
+    <color name="primary_blue">#2196F3</color>
+    <color name="muted_text">#9CA3AF</color>
+
+    <!-- Button colors (used by drawable/button_rounded) -->
+    <color name="button_primary">#3A8DFF</color>
+    <color name="button_primary_dark">#2E72D6</color>
+
+    <!-- Gradient background colors -->
+    <color name="gradient_start">#E8F4FF</color>
+    <color name="gradient_center">#FFFFFF</color>
+    <color name="gradient_end">#F0F9FF</color>
 </resources>
