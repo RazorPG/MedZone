@@ -8,12 +8,19 @@
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_xxsmall">1dp</dimen>
 
+    <!-- Background split offset: distance from top where white rounded area begins -->
+    <dimen name="bg_bottom_top_offset">200dp</dimen>
+
+    <!-- Bottom rounded corner for the white area -->
+    <dimen name="bg_bottom_corner">32dp</dimen>
+
     <!-- Corner radii / elevation -->
     <dimen name="corner_radius_14">14dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_elevation_high">6dp</dimen>
 
     <!-- Text sizes -->
+    <dimen name="text_size_h1">24sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_button">14sp</dimen>
     <dimen name="text_size_terms">12sp</dimen>

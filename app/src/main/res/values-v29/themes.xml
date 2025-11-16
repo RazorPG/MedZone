@@ -4,6 +4,14 @@
     <style name="Theme.MedZone" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Prevent system force-dark on Android 10+ -->
         <item name="android:forceDarkAllowed">false</item>
+
+        <!-- Status bar color: force blue to match app theme -->
+        <item name="android:statusBarColor">@color/primary_blue</item>
+        <item name="android:navigationBarColor">@color/white</item>
+
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryVariant">@color/primary_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 </resources>
-

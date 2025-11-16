@@ -13,7 +13,7 @@
     <!-- Colors extracted from layouts -->
     <color name="gray_dark">#374151</color>
     <color name="hint_color">#717182</color>
-    <color name="primary_blue">#2196F3</color>
+    <color name="primary_blue">#3A8DFF</color>
     <color name="muted_text">#9CA3AF</color>
 
     <!-- Button colors (used by drawable/button_rounded) -->

@@ -28,4 +28,12 @@
     <string name="already_have_account">Sudah Punya Akun?</string>
     <string name="login_text">Masuk</string>
     <string name="label_confirm_password">Konfirmasi Kata Sandi</string>
+
+    <!-- Main / Home screen -->
+    <string name="konsultasi_title">Konsultasi Keluhan Ringan</string>
+
+    <!-- Navigation menu -->
+    <string name="nav_home">Beranda</string>
+    <string name="nav_history">Riwayat</string>
+    <string name="nav_profile">Profil</string>
 </resources>

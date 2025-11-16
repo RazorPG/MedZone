@@ -5,41 +5,394 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:padding="24dp"
+    android:background="@drawable/gradient_background"
+    android:padding="0dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textUserName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Selamat datang di MedZone, rafidhilmi0504@gmail.com!" />
-
-    <TextView
-        android:id="@+id/predictResult"
+    <!-- Full-bleed header: tidak dipengaruhi padding halaman -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textUserName"
-        android:layout_marginVertical="20dp"
-        android:padding="16dp"
-        android:text="Menunggu respons API..."
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        tools:ignore="MissingConstraints" />
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Logout"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/topbar_home_rounded"
+        android:elevation="4dp"
+        android:padding="@dimen/spacing_16"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/predictResult" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/konsultasi_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/spacing_small"
+            android:layout_gravity="center"
+            android:text="@string/konsultasi_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_h1"
+            app:layout_constraintEnd_toStartOf="@id/profileIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/konsultasi_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Temukan obat yang tepat untuk Anda"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_normal"
+            app:layout_constraintEnd_toStartOf="@+id/profileIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/konsultasi_title"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/profileIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/ic_profil"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_bg"
+            android:clipToOutline="true"
+            app:layout_constraintTop_toTopOf="@id/konsultasi_title"
+            app:layout_constraintBottom_toBottomOf="@id/konsultasi_subtitle"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_obat"
+            android:padding="16dp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="#33FFFFFF"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintTop_toBottomOf="@id/konsultasi_subtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="@dimen/spacing_xlarge" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable content: semua isi di bawah header dibungkus NestedScrollView -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/headerCard"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Content container keeps original page padding so the rest of the UI is padded -->
+        <LinearLayout
+            android:id="@+id/contentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_xlarge">
+
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xlarge"
+                card_view:cardCornerRadius="20dp"
+                card_view:cardElevation="@dimen/card_elevation"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textKeluhan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:paddingVertical="16dp"
+                        android:text="Apa keluhan Anda"
+                        android:textColor="#374151"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupKeluhan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        app:chipSpacingHorizontal="@dimen/spacing_small"
+                        app:singleLine="false">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:clickable="true"
+                            android:text="Sakit kepala"
+                            android:textColor="#3A8DFF"
+                            android:textSize="@dimen/text_size_normal"
+                            card_view:chipBackgroundColor="#EFF6FF"
+                            card_view:chipStrokeColor="#3A8DFF"
+                            card_view:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:clickable="true"
+                            android:text="Batuk"
+                            android:textColor="#3A8DFF"
+                            android:textSize="@dimen/text_size_normal"
+                            card_view:chipBackgroundColor="#EFF6FF"
+                            card_view:chipStrokeColor="#3A8DFF"
+                            card_view:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:clickable="true"
+                            android:text="Demam"
+                            android:textColor="#3A8DFF"
+                            android:textSize="@dimen/text_size_normal"
+                            card_view:chipBackgroundColor="#EFF6FF"
+                            card_view:chipStrokeColor="#3A8DFF"
+                            card_view:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:clickable="true"
+                            android:text="Flu"
+                            android:textColor="#3A8DFF"
+                            android:textSize="@dimen/text_size_normal"
+                            card_view:chipBackgroundColor="#EFF6FF"
+                            card_view:chipStrokeColor="#3A8DFF"
+                            card_view:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:clickable="true"
+                            android:text="Sakit Perut"
+                            android:textColor="#3A8DFF"
+                            android:textSize="@dimen/text_size_normal"
+                            card_view:chipBackgroundColor="#EFF6FF"
+                            card_view:chipStrokeColor="#3A8DFF"
+                            card_view:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:clickable="true"
+                            android:text="Pusing"
+                            android:textColor="#3A8DFF"
+                            android:textSize="@dimen/text_size_normal"
+                            card_view:chipBackgroundColor="#EFF6FF"
+                            card_view:chipStrokeColor="#3A8DFF"
+                            card_view:chipStrokeWidth="1dp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="keluhan"
+                        app:cardCornerRadius="@dimen/corner_radius_14"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#E5E7EB"
+                        app:strokeWidth="1dp"
+                        app:useCompatPadding="true">
+
+                        <EditText
+                            android:id="@+id/inputKeluhan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="emailAddress"
+                            android:background="#F8FAFC"
+                            android:gravity="top|start"
+                            android:hint="Tuliskan keluhanmu di sini... (contoh: sakit kepala, batuk, demam)"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:lineHeight="24dp"
+                            android:lines="3"
+                            android:maxLines="3"
+                            android:padding="@dimen/drawable_padding"
+                            android:scrollHorizontally="false"
+                            android:textColorHint="@color/hint_color"
+                            android:textSize="@dimen/text_size_normal" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Hasil rekomendasi dari API, awalnya disembunyikan -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/resultCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="#EFF6FF">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:id="@+id/resultIcon"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_obat"
+                                    android:contentDescription="ikon obat"
+                                    app:tint="#3A8DFF" />
+
+                                <TextView
+                                    android:id="@+id/resultTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Rekomendasi Obat:"
+                                    android:textColor="#0F172A"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/text_size_normal" />
+
+                            </LinearLayout>
+
+                            <!-- inner white card untuk menampilkan nama obat dan dosis -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="0dp"
+                                app:cardUseCompatPadding="true"
+                                android:background="@android:color/white">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="14dp">
+
+                                    <TextView
+                                        android:id="@+id/result_obat_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        android:textColor="#0F172A"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/result_obat_dosis"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:text=""
+                                        android:textColor="#6B7280"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSearchObat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Cari Obat yang Sesuai"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_button"
+                        android:textStyle="bold"
+                        android:background="@drawable/button_rounded"
+                        app:icon="@drawable/ic_search"
+                        app:iconTint="@color/white"
+                        app:iconPadding="@dimen/spacing_small"
+                        app:iconGravity="textStart"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.card.MaterialCardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xlarge"
+                android:backgroundTint="#FEF3C7"
+                app:cardCornerRadius="@dimen/spacing_16"
+                app:cardElevation="0dp"
+                app:strokeColor="#E5E7EB"
+                app:strokeWidth="1dp"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="19sp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_warning" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineHeight="24dp"
+                        android:text="Perhatian: Rekomendasi ini bersifat informasi umum. Selalu konsultasikan dengan dokter atau apoteker sebelum mengonsumsi obat."
+                        android:textColor="#92400E"
+                        android:textSize="@dimen/text_size_normal" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Fixed bottom navigation (not scrollable) -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/menu_bottom_nav"
+        app:itemIconTint="@color/nav_icon_color"
+        app:itemTextColor="@color/nav_icon_color"
+        app:labelVisibilityMode="labeled"
+        app:backgroundTint="@android:color/white"
+        android:elevation="8dp" />
+
+    <!-- Add other content (forms, lists, etc.) here inside contentContainer -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_logo_description"
         android:importantForAccessibility="yes"
-        android:src="@drawable/app" />
+        android:src="@drawable/ic_app" />
 
     <TextView
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="emailAddress"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/email"
+            android:drawableStart="@drawable/ic_email"
             android:drawablePadding="@dimen/drawable_padding"
             android:gravity="center_vertical"
             android:hint="@string/hint_email"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="password"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/lock"
+            android:drawableStart="@drawable/ic_lock"
             android:drawablePadding="@dimen/drawable_padding"
             android:hint="@string/hint_password"
             android:inputType="textPassword"

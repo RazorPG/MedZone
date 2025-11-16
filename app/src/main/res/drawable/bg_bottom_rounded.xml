@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background top gradient (reused) -->
+    <item android:drawable="@drawable/topbar_home" />
+
+    <!-- White rounded bottom area that is inset from the top so top gradient remains visible -->
+    <item android:top="@dimen/bg_bottom_top_offset">
+        <shape
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <corners
+                android:bottomLeftRadius="@dimen/bg_bottom_corner"
+                android:bottomRightRadius="@dimen/bg_bottom_corner"
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp" />
+        </shape>
+    </item>
+
+</layer-list>
