@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText inputName, inputEmail, inputPassword;
+    private EditText inputName, inputEmail, inputPassword, inputConfirmPassword;
     private Button btnRegister;
     private TextView txtLoginHere;
     private FirebaseAuth auth;
@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         inputName = findViewById(R.id.inputName);
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
+        inputConfirmPassword = findViewById(R.id.inputConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
         txtLoginHere = findViewById(R.id.txtLoginHere);
 
@@ -54,9 +55,15 @@ public class RegisterActivity extends AppCompatActivity {
         String name = inputName.getText().toString().trim();
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
+        String confirmPassword = inputConfirmPassword.getText().toString().trim();
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Isi semua field!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Password dan konfirmasi tidak sesuai!", Toast.LENGTH_SHORT).show();
             return;
         }
 

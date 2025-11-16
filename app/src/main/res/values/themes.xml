@@ -1,10 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <!-- Force a light (non-night) MaterialComponents theme so UI doesn't invert in dark mode -->
     <style name="Theme.MedZone" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryVariant">@color/button_primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,8 +12,12 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Disable system force-dark auto inversion -->
-        <item name="android:forceDarkAllowed">false</item>
+
+        <!-- Default widget styles (use Arial via @font/arial) -->
+        <item name="android:textViewStyle">@style/CustomTextView</item>
+        <item name="android:buttonStyle">@style/CustomButton</item>
+        <item name="android:editTextStyle">@style/CustomEditText</item>
+
         <!-- Customize your theme here. -->
     </style>
 </resources>

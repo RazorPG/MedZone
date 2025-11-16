@@ -2,56 +2,193 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
     android:gravity="center"
-    android:padding="24dp"
-    android:background="#F5F5F5">
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_large">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_logo_description"
+        android:importantForAccessibility="yes"
+        android:src="@drawable/app" />
 
     <TextView
-        android:text="Daftar Akun Baru"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xlarge"
+        android:text="@string/register_title"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_normal" />
 
-    <EditText
-        android:id="@+id/inputName"
-        android:hint="Nama Lengkap"
-        android:inputType="textPersonName"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xlarge"
+        android:text="@string/register_subtitle"
+        android:textAlignment="center"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/text_size_normal" />
 
-    <EditText
-        android:id="@+id/inputEmail"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="12dp"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/label_fullname"
+        android:textColor="@color/gray_dark" />
 
-    <EditText
-        android:id="@+id/inputPassword"
-        android:hint="Kata Sandi"
-        android:inputType="textPassword"
-        android:layout_marginTop="12dp"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        card_view:cardCornerRadius="@dimen/corner_radius_14"
+        card_view:cardElevation="@dimen/card_elevation"
+        card_view:cardUseCompatPadding="true">
 
-    <Button
+        <EditText
+            android:id="@+id/inputName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="name"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/profil"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center_vertical"
+            android:hint="@string/hint_fullname"
+            android:inputType="textPersonName"
+            android:padding="@dimen/drawable_padding"
+            android:textColorHint="@color/hint_color" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_email"
+        android:textColor="@color/gray_dark" />
+
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        card_view:cardCornerRadius="@dimen/corner_radius_14"
+        card_view:cardElevation="@dimen/card_elevation"
+        card_view:cardUseCompatPadding="true">
+
+        <EditText
+            android:id="@+id/inputEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center_vertical"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/drawable_padding"
+            android:textColorHint="@color/hint_color" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_password"
+        android:textColor="@color/gray_dark" />
+
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        card_view:cardCornerRadius="@dimen/corner_radius_14"
+        card_view:cardElevation="@dimen/card_elevation"
+        card_view:cardUseCompatPadding="true">
+
+        <EditText
+            android:id="@+id/inputPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/lock"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:padding="@dimen/drawable_padding"
+            android:textColorHint="@color/hint_color" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_confirm_password"
+        android:textColor="@color/gray_dark" />
+
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        card_view:cardCornerRadius="@dimen/corner_radius_14"
+        card_view:cardElevation="@dimen/card_elevation"
+        card_view:cardUseCompatPadding="true">
+
+        <EditText
+            android:id="@+id/inputConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/lock"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:padding="@dimen/drawable_padding"
+            android:textColorHint="@color/hint_color" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegister"
-        android:text="Daftar"
-        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:background="@drawable/button_rounded"
+        android:text="@string/btn_register"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_16"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_xxsmall"
+            android:gravity="center"
+            android:text="@string/already_have_account"
+            android:textColor="@color/textColorSecondary" />
+
+        <TextView
+            android:id="@+id/txtLoginHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/login_text"
+            android:textColor="@color/primary_blue" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/txtLoginHere"
-        android:text="Sudah punya akun? Masuk di sini"
-        android:textColor="#2196F3"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/terms_text"
+        android:textAlignment="center"
+        android:textColor="@color/muted_text"
+        android:textSize="@dimen/text_size_terms" />
+
 </LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing -->
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">20dp</dimen>
+    <dimen name="spacing_16">16dp</dimen>
+    <dimen name="spacing_medium">12dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_xxsmall">1dp</dimen>
+
+    <!-- Corner radii / elevation -->
+    <dimen name="corner_radius_14">14dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_elevation_high">6dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_button">14sp</dimen>
+    <dimen name="text_size_terms">12sp</dimen>
+
+    <!-- Drawable padding -->
+    <dimen name="drawable_padding">12dp</dimen>
+</resources>

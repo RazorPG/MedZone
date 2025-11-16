@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- API 29+ theme overrides -->
+    <style name="Theme.MedZone" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Prevent system force-dark on Android 10+ -->
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>
+
