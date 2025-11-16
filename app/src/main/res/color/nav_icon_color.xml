@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- aktif (checked / selected) -->
+    <item android:state_checked="true" android:color="@color/button_primary" />
+    <item android:state_selected="true" android:color="@color/button_primary" />
+
+    <!-- default: tidak aktif -->
+    <item android:color="@color/muted_text" />
+</selector>

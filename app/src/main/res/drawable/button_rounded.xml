@@ -8,6 +8,17 @@
         </shape>
     </item>
 
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#3A8DFF"
+                android:endColor="#5BA3FF" />
+            <corners android:radius="@dimen/corner_radius_14"/>
+        </shape>
+    </item>
+
     <!-- default state -->
     <item>
         <shape android:shape="rectangle">
