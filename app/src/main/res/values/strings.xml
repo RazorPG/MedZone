@@ -31,6 +31,20 @@
 
     <!-- Main / Home screen -->
     <string name="konsultasi_title">Konsultasi Keluhan Ringan</string>
+    <string name="konsultasi_subtitle">Temukan obat yang tepat untuk Anda</string>
+    <string name="apa_keluhan">Apa keluhan Anda</string>
+    <string name="hint_input_keluhan">Tuliskan keluhanmu di sini... (contoh: sakit kepala, batuk, demam)</string>
+    <string name="rekomendasi_obat">Rekomendasi Obat:</string>
+    <string name="btn_search_obat">Cari Obat yang Sesuai</string>
+    <string name="warning_message">Perhatian: Rekomendasi ini bersifat informasi umum. Selalu konsultasikan dengan dokter atau apoteker sebelum mengonsumsi obat.</string>
+
+    <!-- Chip quick symptom texts -->
+    <string name="chip_sakit_kepala">Sakit kepala</string>
+    <string name="chip_batuk">Batuk</string>
+    <string name="chip_demam">Demam</string>
+    <string name="chip_flu">Flu</string>
+    <string name="chip_sakit_perut">Sakit Perut</string>
+    <string name="chip_pusing">Pusing</string>
 
     <!-- Navigation menu -->
     <string name="nav_home">Beranda</string>

@@ -16,6 +16,8 @@
 
     <!-- Corner radii / elevation -->
     <dimen name="corner_radius_14">14dp</dimen>
+    <dimen name="corner_radius_12">12dp</dimen>
+    <dimen name="corner_radius_16">16dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_elevation_high">6dp</dimen>
 
@@ -27,4 +29,22 @@
 
     <!-- Drawable padding -->
     <dimen name="drawable_padding">12dp</dimen>
+
+    <!-- Added for activity_main -->
+    <dimen name="avatar_size">64dp</dimen>
+    <dimen name="result_icon_size">20dp</dimen>
+    <dimen name="card_inner_padding">16dp</dimen>
+    <dimen name="chip_stroke_width">1dp</dimen>
+    <dimen name="card_corner_20">20dp</dimen>
+    <dimen name="spacing_19">19dp</dimen>
+
+    <!-- helper dims -->
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="icon_40">40dp</dimen>
+
+    <!-- new helpers -->
+    <dimen name="zero">0dp</dimen>
+    <dimen name="header_elevation">4dp</dimen>
+    <dimen name="line_height_24">24dp</dimen>
+    <dimen name="nav_elevation">8dp</dimen>
 </resources>
