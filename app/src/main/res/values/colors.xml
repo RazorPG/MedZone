@@ -14,6 +14,7 @@
     <color name="gray_dark">#374151</color>
     <color name="hint_color">#717182</color>
     <color name="primary_blue">#3A8DFF</color>
+    <color name="warn_border">#FDE047</color>
     <color name="muted_text">#9CA3AF</color>
 
     <!-- Button colors (used by drawable/button_rounded) -->
@@ -24,4 +25,15 @@
     <color name="gradient_start">#E8F4FF</color>
     <color name="gradient_center">#FFFFFF</color>
     <color name="gradient_end">#F0F9FF</color>
+
+    <!-- Additional colors used in layouts (previously hardcoded) -->
+    <color name="chip_bg_light">#EFF6FF</color>
+    <color name="input_bg">#F8FAFC</color>
+    <color name="overlay_white_20">#33FFFFFF</color>
+    <color name="text_dark">#0F172A</color>
+    <color name="muted_gray_6B">#6B7280</color>
+    <color name="warning_bg">#FEF3C7</color>
+    <color name="warning_text">#92400E</color>
+
+    <!-- NOTE: nav_icon_color is defined as a selector in res/color/nav_icon_color.xml -->
 </resources>

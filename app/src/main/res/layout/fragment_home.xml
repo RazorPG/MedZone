@@ -6,16 +6,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/gradient_background"
-    android:padding="0dp"
-    tools:context=".MainActivity">
+    android:padding="0dp">
 
-    <!-- Full-bleed header: tidak dipengaruhi padding halaman -->
+    <!-- Header (same as previous) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/topbar_home_rounded"
-        android:elevation="4dp"
+        android:elevation="@dimen/header_elevation"
         android:padding="@dimen/spacing_16"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,55 +37,52 @@
             android:id="@+id/konsultasi_subtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Temukan obat yang tepat untuk Anda"
+            android:text="@string/konsultasi_subtitle"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_normal"
             app:layout_constraintEnd_toStartOf="@+id/profileIcon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/konsultasi_title"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/konsultasi_title" />
 
         <ImageView
             android:id="@+id/profileIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="@dimen/drawable_padding"
             android:src="@drawable/ic_profil"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_logo_description"
             android:scaleType="centerCrop"
             android:background="@drawable/circle_bg"
-            android:clipToOutline="true"
             app:layout_constraintTop_toTopOf="@id/konsultasi_title"
             app:layout_constraintBottom_toBottomOf="@id/konsultasi_subtitle"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
             android:src="@drawable/ic_obat"
-            android:padding="16dp"
+            android:padding="@dimen/drawable_padding"
             android:background="@drawable/circle_bg"
-            android:backgroundTint="#33FFFFFF"
-            android:contentDescription="@string/app_name"
+            android:backgroundTint="@color/overlay_white_20"
+            android:contentDescription="@string/app_logo_description"
             app:layout_constraintTop_toBottomOf="@id/konsultasi_subtitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="@dimen/spacing_xlarge" />
+            android:layout_marginTop="@dimen/spacing_xlarge" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Scrollable content: semua isi di bawah header dibungkus NestedScrollView -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/headerCard"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Content container keeps original page padding so the rest of the UI is padded -->
+        <!-- Content: reuse the same inner layout from activity_main -->
         <LinearLayout
             android:id="@+id/contentContainer"
             android:layout_width="match_parent"
@@ -94,28 +90,30 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_xlarge">
 
-            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <!-- ... here we use the same inner card UI as before; keep ids so HomeFragment logic works -->
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"
-                card_view:cardCornerRadius="20dp"
-                card_view:cardElevation="@dimen/card_elevation"
-                card_view:cardUseCompatPadding="true">
+                app:cardCornerRadius="@dimen/card_corner_20"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="@dimen/card_inner_padding">
 
                     <TextView
                         android:id="@+id/textKeluhan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:paddingVertical="16dp"
-                        android:text="Apa keluhan Anda"
-                        android:textColor="#374151"
+                        android:layout_marginBottom="@dimen/spacing_large"
+                        android:paddingVertical="@dimen/spacing_small"
+                        android:text="@string/apa_keluhan"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_normal" />
 
                     <com.google.android.material.chip.ChipGroup
@@ -131,72 +129,72 @@
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Sakit kepala"
-                            android:textColor="#3A8DFF"
-                            android:textSize="@dimen/text_size_normal"
-                            card_view:chipBackgroundColor="#EFF6FF"
-                            card_view:chipStrokeColor="#3A8DFF"
-                            card_view:chipStrokeWidth="1dp" />
+                            android:focusable="true"
+                            android:text="@string/chip_sakit_kepala"
+                            android:textColor="@color/primary_blue"
+                            app:chipBackgroundColor="@color/chip_bg_light"
+                            app:chipStrokeColor="@color/primary_blue"
+                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Batuk"
-                            android:textColor="#3A8DFF"
-                            android:textSize="@dimen/text_size_normal"
-                            card_view:chipBackgroundColor="#EFF6FF"
-                            card_view:chipStrokeColor="#3A8DFF"
-                            card_view:chipStrokeWidth="1dp" />
+                            android:focusable="true"
+                            android:text="@string/chip_batuk"
+                            android:textColor="@color/primary_blue"
+                            app:chipBackgroundColor="@color/chip_bg_light"
+                            app:chipStrokeColor="@color/primary_blue"
+                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Demam"
-                            android:textColor="#3A8DFF"
-                            android:textSize="@dimen/text_size_normal"
-                            card_view:chipBackgroundColor="#EFF6FF"
-                            card_view:chipStrokeColor="#3A8DFF"
-                            card_view:chipStrokeWidth="1dp" />
+                            android:focusable="true"
+                            android:text="@string/chip_demam"
+                            android:textColor="@color/primary_blue"
+                            app:chipBackgroundColor="@color/chip_bg_light"
+                            app:chipStrokeColor="@color/primary_blue"
+                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Flu"
-                            android:textColor="#3A8DFF"
-                            android:textSize="@dimen/text_size_normal"
-                            card_view:chipBackgroundColor="#EFF6FF"
-                            card_view:chipStrokeColor="#3A8DFF"
-                            card_view:chipStrokeWidth="1dp" />
+                            android:focusable="true"
+                            android:text="@string/chip_flu"
+                            android:textColor="@color/primary_blue"
+                            app:chipBackgroundColor="@color/chip_bg_light"
+                            app:chipStrokeColor="@color/primary_blue"
+                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Sakit Perut"
-                            android:textColor="#3A8DFF"
-                            android:textSize="@dimen/text_size_normal"
-                            card_view:chipBackgroundColor="#EFF6FF"
-                            card_view:chipStrokeColor="#3A8DFF"
-                            card_view:chipStrokeWidth="1dp" />
+                            android:focusable="true"
+                            android:text="@string/chip_sakit_perut"
+                            android:textColor="@color/primary_blue"
+                            app:chipBackgroundColor="@color/chip_bg_light"
+                            app:chipStrokeColor="@color/primary_blue"
+                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Pusing"
-                            android:textColor="#3A8DFF"
-                            android:textSize="@dimen/text_size_normal"
-                            card_view:chipBackgroundColor="#EFF6FF"
-                            card_view:chipStrokeColor="#3A8DFF"
-                            card_view:chipStrokeWidth="1dp" />
+                            android:focusable="true"
+                            android:text="@string/chip_pusing"
+                            android:textColor="@color/primary_blue"
+                            app:chipBackgroundColor="@color/chip_bg_light"
+                            app:chipStrokeColor="@color/primary_blue"
+                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -206,8 +204,8 @@
                         android:autofillHints="keluhan"
                         app:cardCornerRadius="@dimen/corner_radius_14"
                         app:cardElevation="0dp"
-                        app:strokeColor="#E5E7EB"
-                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/muted_text"
+                        app:strokeWidth="@dimen/chip_stroke_width"
                         app:useCompatPadding="true">
 
                         <EditText
@@ -215,11 +213,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="emailAddress"
-                            android:background="#F8FAFC"
+                            android:background="@color/input_bg"
                             android:gravity="top|start"
-                            android:hint="Tuliskan keluhanmu di sini... (contoh: sakit kepala, batuk, demam)"
+                            android:hint="@string/hint_input_keluhan"
                             android:inputType="textMultiLine|textCapSentences"
-                            android:lineHeight="24dp"
+                            android:lineHeight="@dimen/line_height_24"
                             android:lines="3"
                             android:maxLines="3"
                             android:padding="@dimen/drawable_padding"
@@ -229,22 +227,21 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Hasil rekomendasi dari API, awalnya disembunyikan -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/resultCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_small"
-                        app:cardCornerRadius="16dp"
+                        app:cardCornerRadius="@dimen/corner_radius_16"
                         app:cardElevation="0dp"
                         android:visibility="gone"
-                        app:cardBackgroundColor="#EFF6FF">
+                        app:cardBackgroundColor="@color/chip_bg_light">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="16dp">
+                            android:padding="@dimen/card_inner_padding">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -254,30 +251,29 @@
 
                                 <ImageView
                                     android:id="@+id/resultIcon"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="@dimen/result_icon_size"
+                                    android:layout_height="@dimen/result_icon_size"
                                     android:src="@drawable/ic_obat"
-                                    android:contentDescription="ikon obat"
-                                    app:tint="#3A8DFF" />
+                                    android:contentDescription="@string/app_logo_description"
+                                    app:tint="@color/primary_blue" />
 
                                 <TextView
                                     android:id="@+id/resultTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Rekomendasi Obat:"
-                                    android:textColor="#0F172A"
+                                    android:layout_marginStart="@dimen/spacing_small"
+                                    android:text="@string/rekomendasi_obat"
+                                    android:textColor="@color/text_dark"
                                     android:textStyle="bold"
                                     android:textSize="@dimen/text_size_normal" />
 
                             </LinearLayout>
 
-                            <!-- inner white card untuk menampilkan nama obat dan dosis -->
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                app:cardCornerRadius="12dp"
+                                android:layout_marginTop="@dimen/spacing_small"
+                                app:cardCornerRadius="@dimen/corner_radius_12"
                                 app:cardElevation="0dp"
                                 app:cardUseCompatPadding="true"
                                 android:background="@android:color/white">
@@ -286,25 +282,25 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:padding="14dp">
+                                    android:padding="@dimen/card_inner_padding">
 
                                     <TextView
                                         android:id="@+id/result_obat_name"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text=""
-                                        android:textColor="#0F172A"
-                                        android:textSize="16sp"
+                                        android:textColor="@color/text_dark"
+                                        android:textSize="@dimen/text_size_normal"
                                         android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/result_obat_dosis"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="8dp"
+                                        android:layout_marginTop="@dimen/spacing_small"
                                         android:text=""
-                                        android:textColor="#6B7280"
-                                        android:textSize="14sp" />
+                                        android:textColor="@color/muted_gray_6B"
+                                        android:textSize="@dimen/text_size_terms" />
 
                                 </LinearLayout>
 
@@ -321,8 +317,8 @@
                         android:layout_marginTop="@dimen/spacing_large"
                         android:enabled="false"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Cari Obat yang Sesuai"
+                        android:padding="@dimen/drawable_padding"
+                        android:text="@string/btn_search_obat"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_size_button"
                         android:textStyle="bold"
@@ -336,15 +332,16 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- warning card -->
             <com.google.android.material.card.MaterialCardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"
-                android:backgroundTint="#FEF3C7"
-                app:cardCornerRadius="@dimen/spacing_16"
+                android:backgroundTint="@color/warning_bg"
+                app:cardCornerRadius="@dimen/corner_radius_16"
                 app:cardElevation="0dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp"
+                app:strokeColor="@color/warn_border"
+                app:strokeWidth="@dimen/chip_stroke_width"
                 card_view:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -352,13 +349,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="19sp">
+                    android:padding="@dimen/spacing_19">
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/icon_40"
+                        android:layout_height="@dimen/icon_40"
                         android:layout_marginEnd="@dimen/spacing_small"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/app_logo_description"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_warning" />
 
@@ -366,33 +363,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:lineHeight="24dp"
-                        android:text="Perhatian: Rekomendasi ini bersifat informasi umum. Selalu konsultasikan dengan dokter atau apoteker sebelum mengonsumsi obat."
-                        android:textColor="#92400E"
+                        android:lineHeight="@dimen/line_height_24"
+                        android:text="@string/warning_message"
+                        android:textColor="@color/warning_text"
                         android:textSize="@dimen/text_size_normal" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <!-- Fixed bottom navigation (not scrollable) -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/menu_bottom_nav"
-        app:itemIconTint="@color/nav_icon_color"
-        app:itemTextColor="@color/nav_icon_color"
-        app:labelVisibilityMode="labeled"
-        app:backgroundTint="@android:color/white"
-        android:elevation="8dp" />
-
-    <!-- Add other content (forms, lists, etc.) here inside contentContainer -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
