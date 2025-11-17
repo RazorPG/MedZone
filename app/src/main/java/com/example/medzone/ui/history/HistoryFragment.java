@@ -39,11 +39,14 @@ public class HistoryFragment extends Fragment {
         rv.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+
+        // ✅ Load histories terlebih dahulu untuk inisialisasi LiveData
+        viewModel.loadHistoriesForCurrentUser();
+
+        // ✅ Kemudian observe LiveData yang sudah diinisialisasi
         viewModel.getHistories().observe(getViewLifecycleOwner(), list -> {
             if (list == null) list = new ArrayList<>();
             adapter.submitList(list);
         });
-
-        viewModel.loadHistoriesForCurrentUser();
     }
 }

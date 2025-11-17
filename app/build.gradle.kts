@@ -79,6 +79,16 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
+    // ✅ Room Database untuk local storage
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation(libs.androidx.lifecycle.livedata)
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    // ✅ Lifecycle components untuk MediatorLiveData
+    implementation("androidx.lifecycle:lifecycle-livedata:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.7.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
