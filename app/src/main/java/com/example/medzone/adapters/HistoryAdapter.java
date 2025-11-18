@@ -2,6 +2,7 @@ package com.example.medzone.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,19 +62,21 @@ public class HistoryAdapter extends ListAdapter<com.example.medzone.model.Histor
         // chips: prefer diagnosis from API; fallback to quickChips
         holder.chipGroupKeluhanItem.removeAllViews();
         if (item.diagnosis != null && !item.diagnosis.trim().isEmpty()) {
-            Chip chip = new Chip(context);
+            // Inflate reusable chip layout so XML attributes (colors, stroke) are applied
+            Chip chip = (Chip) LayoutInflater.from(context).inflate(R.layout.chip_keluhan, holder.chipGroupKeluhanItem, false);
             chip.setText(item.diagnosis);
             chip.setClickable(false);
             chip.setCheckable(false);
-            chip.setChipBackgroundColorResource(R.color.chip_bg_light);
+            // Ensure colors/stroke are applied programmatically as fallback
+            applyChipStyle(chip);
             holder.chipGroupKeluhanItem.addView(chip);
         } else if (item.quickChips != null) {
             for (String chipText : item.quickChips) {
-                Chip chip = new Chip(context);
+                Chip chip = (Chip) LayoutInflater.from(context).inflate(R.layout.chip_keluhan, holder.chipGroupKeluhanItem, false);
                 chip.setText(chipText);
                 chip.setClickable(false);
                 chip.setCheckable(false);
-                chip.setChipBackgroundColorResource(R.color.chip_bg_light);
+                applyChipStyle(chip);
                 holder.chipGroupKeluhanItem.addView(chip);
             }
         }
@@ -100,6 +104,19 @@ public class HistoryAdapter extends ListAdapter<com.example.medzone.model.Histor
         } else {
             Log.w(TAG, "Item rekomendasi is null!");
         }
+    }
+
+    // Helper to explicitly apply chip style values programmatically (fallback)
+    private void applyChipStyle(Chip chip) {
+        int textColor = ContextCompat.getColor(context, R.color.primary_blue);
+        int bgColor = ContextCompat.getColor(context, R.color.chip_bg_light);
+        int strokeColor = ContextCompat.getColor(context, R.color.primary_blue);
+        float strokeWidth = context.getResources().getDimension(R.dimen.chip_stroke_width);
+
+        chip.setTextColor(textColor);
+        chip.setChipBackgroundColor(ColorStateList.valueOf(bgColor));
+        chip.setChipStrokeColor(ColorStateList.valueOf(strokeColor));
+        chip.setChipStrokeWidth(strokeWidth);
     }
 
     static class HistoryViewHolder extends RecyclerView.ViewHolder {

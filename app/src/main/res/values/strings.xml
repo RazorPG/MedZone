@@ -32,7 +32,7 @@
     <!-- Main / Home screen -->
     <string name="konsultasi_title">Konsultasi Keluhan Ringan</string>
     <string name="konsultasi_subtitle">Temukan obat yang tepat untuk Anda</string>
-    <string name="apa_keluhan">Apa keluhan Anda</string>
+    <string name="apa_keluhan">Apa keluhan Anda?</string>
     <string name="hint_input_keluhan">Tuliskan keluhanmu di sini... (contoh: sakit kepala, batuk, demam)</string>
     <string name="rekomendasi_obat">Rekomendasi Obat:</string>
     <string name="btn_search_obat">Cari Obat yang Sesuai</string>
@@ -50,4 +50,27 @@
     <string name="nav_home">Beranda</string>
     <string name="nav_history">Riwayat</string>
     <string name="nav_profile">Profil</string>
+    <string name="history_title">Riwayat Konsultasi</string>
+    <string name="history_subtitle">Lihat kembali keluhan Anda sebelumnya</string>
+
+    <!-- new strings to replace hardcoded text in item layouts -->
+    <string name="doctor_icon_desc">Icon kalender</string>
+    <string name="clock_icon_desc">Jam</string>
+    <string name="medicine_icon_desc">Icon obat</string>
+    <string name="keluhan_label">Keluhan:</string>
+    <string name="sample_rec_name">Paracetamol 500mg</string>
+    <string name="sample_rec_dosis">3x sehari 1 tablet</string>
+
+    <!-- Profile strings -->
+    <string name="profile_title">Profil</string>
+    <string name="profile_subtitle">Kelola akun Anda</string>
+    <string name="settings_account">Pengaturan Akun</string>
+    <string name="settings_notifications">Notifikasi</string>
+    <string name="settings_help">Bantuan &amp; Dukungan</string>
+    <string name="stats_title">Statistik Kesehatan Anda</string>
+    <string name="stats_consultations">Konsultasi</string>
+    <string name="stats_medicines">Obat</string>
+    <string name="logout">Keluar</string>
+    <string name="menu_placeholder"></string>
+    <string name="empty"></string>
 </resources>

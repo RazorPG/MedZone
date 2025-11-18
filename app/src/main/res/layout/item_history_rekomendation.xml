@@ -4,24 +4,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:padding="12dp"
-    android:layout_marginBottom="8dp">
+    android:padding="@dimen/spacing_medium"
+    android:layout_marginBottom="@dimen/spacing_small">
 
     <TextView
         android:id="@+id/tvRecName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Paracetamol 500mg"
-        android:textColor="@color/text_dark"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:text="@string/sample_rec_name"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_normal" />
 
     <TextView
         android:id="@+id/tvRecDosis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="3x sehari 1 tablet"
+        android:text="@string/sample_rec_dosis"
         android:textColor="@color/muted_gray_6B"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="@dimen/spacing_xsmall" />
 
 </LinearLayout>

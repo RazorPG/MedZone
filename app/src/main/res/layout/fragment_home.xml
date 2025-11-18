@@ -95,7 +95,6 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xlarge"
                 app:cardCornerRadius="@dimen/card_corner_20"
                 app:cardElevation="@dimen/card_elevation"
                 app:cardUseCompatPadding="true">
@@ -127,74 +126,56 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MedZone.Chip"
                             android:checkable="false"
                             android:clickable="true"
                             android:focusable="true"
-                            android:text="@string/chip_sakit_kepala"
-                            android:textColor="@color/primary_blue"
-                            app:chipBackgroundColor="@color/chip_bg_light"
-                            app:chipStrokeColor="@color/primary_blue"
-                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
+                            android:text="@string/chip_sakit_kepala" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MedZone.Chip"
                             android:checkable="false"
                             android:clickable="true"
                             android:focusable="true"
-                            android:text="@string/chip_batuk"
-                            android:textColor="@color/primary_blue"
-                            app:chipBackgroundColor="@color/chip_bg_light"
-                            app:chipStrokeColor="@color/primary_blue"
-                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
+                            android:text="@string/chip_batuk" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MedZone.Chip"
                             android:checkable="false"
                             android:clickable="true"
                             android:focusable="true"
-                            android:text="@string/chip_demam"
-                            android:textColor="@color/primary_blue"
-                            app:chipBackgroundColor="@color/chip_bg_light"
-                            app:chipStrokeColor="@color/primary_blue"
-                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
+                            android:text="@string/chip_demam" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MedZone.Chip"
                             android:checkable="false"
                             android:clickable="true"
                             android:focusable="true"
-                            android:text="@string/chip_flu"
-                            android:textColor="@color/primary_blue"
-                            app:chipBackgroundColor="@color/chip_bg_light"
-                            app:chipStrokeColor="@color/primary_blue"
-                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
+                            android:text="@string/chip_flu" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MedZone.Chip"
                             android:checkable="false"
                             android:clickable="true"
                             android:focusable="true"
-                            android:text="@string/chip_sakit_perut"
-                            android:textColor="@color/primary_blue"
-                            app:chipBackgroundColor="@color/chip_bg_light"
-                            app:chipStrokeColor="@color/primary_blue"
-                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
+                            android:text="@string/chip_sakit_perut" />
 
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MedZone.Chip"
                             android:checkable="false"
                             android:clickable="true"
                             android:focusable="true"
-                            android:text="@string/chip_pusing"
-                            android:textColor="@color/primary_blue"
-                            app:chipBackgroundColor="@color/chip_bg_light"
-                            app:chipStrokeColor="@color/primary_blue"
-                            app:chipStrokeWidth="@dimen/chip_stroke_width" />
+                            android:text="@string/chip_pusing" />
 
                     </com.google.android.material.chip.ChipGroup>
 

@@ -47,4 +47,15 @@
     <dimen name="header_elevation">4dp</dimen>
     <dimen name="line_height_24">24dp</dimen>
     <dimen name="nav_elevation">8dp</dimen>
+    <dimen name="header_height">200dp</dimen>
+    <dimen name="header_overlap">40dp</dimen>
+    <!-- header_content_top = header_height - header_overlap (200dp - 40dp = 160dp) -->
+    <dimen name="header_content_top">160dp</dimen>
+    <dimen name="nav_height">56dp</dimen>
+
+    <!-- icon and small spacing -->
+    <dimen name="icon_small">16dp</dimen>
+    <dimen name="icon_20">20dp</dimen>
+    <dimen name="icon_medium">24dp</dimen>
+    <dimen name="spacing_xsmall">6dp</dimen>
 </resources>

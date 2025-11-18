@@ -14,7 +14,9 @@
     <color name="gray_dark">#374151</color>
     <color name="hint_color">#717182</color>
     <color name="primary_blue">#3A8DFF</color>
+    <color name="primary_blue_end">#5BA3FF</color>
     <color name="warn_border">#FDE047</color>
+    <color name="warn_orange">#D97706</color>
     <color name="muted_text">#9CA3AF</color>
 
     <!-- Button colors (used by drawable/button_rounded) -->

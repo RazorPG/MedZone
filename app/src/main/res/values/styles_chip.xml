@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Reusable chip style for MedZone -->
+    <style name="Widget.MedZone.Chip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textColor">@color/primary_blue</item>
+        <item name="chipBackgroundColor">@color/chip_bg_light</item>
+        <item name="chipStrokeColor">@color/primary_blue</item>
+        <item name="chipStrokeWidth">@dimen/chip_stroke_width</item>
+<!--        &lt;!&ndash; optional: corner radius if you want consistent rounding &ndash;&gt;-->
+<!--        <item name="chipCornerRadius">@dimen/chip_corner_radius</item>-->
+    </style>
+
+</resources>
+

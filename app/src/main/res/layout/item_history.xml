@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:layout_marginBottom="@dimen/spacing_large"
+    app:cardCornerRadius="@dimen/corner_radius_16"
+    app:cardElevation="@dimen/header_elevation">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/card_inner_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/ivDoctorIcon"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_kalender"
-                android:contentDescription="Doctor Icon" />
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/doctor_icon_desc"
+                android:src="@drawable/ic_kalender" />
+
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
                 android:layout_weight="1"
-                android:text="26 Oktober 2025"
+                android:text=""
                 android:textColor="@color/gray_dark" />
+
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_riwayat"
-                android:contentDescription="Clock Icon"
-                 />
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/clock_icon_desc"
+                android:src="@drawable/ic_riwayat" />
+
             <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14:30"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:text=""
                 android:textColor="@color/gray_dark" />
         </LinearLayout>
 
@@ -52,68 +56,68 @@
             android:id="@+id/tvKeluhanLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Keluhan:"
-            android:layout_marginTop="12dp"
-            android:textStyle="bold"
-            android:textColor="@color/text_dark" />
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/keluhan_label"
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/textColorPrimary" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupKeluhanItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:chipSpacingHorizontal="8dp" />
+            android:layout_marginTop="@dimen/spacing_small"
+            app:chipSpacingHorizontal="@dimen/spacing_small" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/recommendationContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:cardPreventCornerOverlap="false"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:backgroundTint="@color/chip_bg_light"
             android:clipToPadding="false"
-            android:backgroundTint="@color/chip_bg_light">
+            app:cardCornerRadius="@dimen/corner_radius_12"
+            app:cardElevation="@dimen/zero"
+            app:cardPreventCornerOverlap="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_medium">
+
                 <ImageView
                     android:id="@+id/ivMedicineIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:contentDescription="@string/medicine_icon_desc"
                     android:src="@drawable/ic_obat"
-                    android:contentDescription="Medicine Icon"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/primary_blue"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/primary_blue" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/tvRecommendationLabel"
-                    android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rekomendasi Obat:"
-                    android:textSize="@dimen/text_size_normal"
-                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:text="@string/rekomendasi_obat"
                     android:textColor="@color/gray_dark"
-                    app:layout_constraintStart_toEndOf="@id/ivMedicineIcon"
-                    app:layout_constraintTop_toTopOf="@id/ivMedicineIcon"
+                    android:textSize="@dimen/text_size_normal"
                     app:layout_constraintBottom_toBottomOf="@id/ivMedicineIcon"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/ivMedicineIcon"
+                    app:layout_constraintTop_toTopOf="@id/ivMedicineIcon" />
 
                 <LinearLayout
                     android:id="@+id/recommendationList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivMedicineIcon"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:background="@drawable/button_rounded"
                     android:backgroundTint="@color/white"
-                    android:padding="8dp" />
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivMedicineIcon" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
