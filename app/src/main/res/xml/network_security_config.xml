@@ -5,8 +5,7 @@
 
     <!-- Allow cleartext only for the specific IP used by your API -->
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">10.91.48.175</domain>
-        <domain includeSubdomains="false">10.2.2.2</domain>
+        <domain includeSubdomains="false">192.168.4.70</domain>
     </domain-config>
 
     <!-- Optional: during debug you may want broader trust, but keep minimal for production -->

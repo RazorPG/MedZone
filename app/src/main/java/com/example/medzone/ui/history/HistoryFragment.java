@@ -38,15 +38,19 @@ public class HistoryFragment extends Fragment {
         adapter = new HistoryAdapter(requireContext());
         rv.setAdapter(adapter);
 
-        viewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+        // Use activity-scoped ViewModel so HomeFragment and HistoryFragment share the same instance
+        viewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
 
         // ✅ Load histories terlebih dahulu untuk inisialisasi LiveData
         viewModel.loadHistoriesForCurrentUser();
 
-        // ✅ Kemudian observe LiveData yang sudah diinisialisasi
+        // ✅ Observe LiveData dari Room
         viewModel.getHistories().observe(getViewLifecycleOwner(), list -> {
             if (list == null) list = new ArrayList<>();
             adapter.submitList(list);
         });
+
+        // ✅ Auto-fetch dari Firebase dan merge ke lokal apabila berbeda
+        viewModel.refreshFromCloudIfChanged();
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
@@ -20,7 +21,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
-
+            <ImageView
+                android:id="@+id/ivDoctorIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_kalender"
+                android:contentDescription="Doctor Icon" />
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="0dp"
@@ -28,7 +34,12 @@
                 android:layout_weight="1"
                 android:text="26 Oktober 2025"
                 android:textColor="@color/gray_dark" />
-
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_riwayat"
+                android:contentDescription="Clock Icon"
+                 />
             <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
@@ -53,31 +64,59 @@
             android:layout_marginTop="8dp"
             app:chipSpacingHorizontal="8dp" />
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/recommendationContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/chip_bg_light"
-            android:padding="12dp"
             android:layout_marginTop="12dp"
-            android:clipToPadding="false">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:cardPreventCornerOverlap="false"
+            android:clipToPadding="false"
+            android:backgroundTint="@color/chip_bg_light">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rekomendasi Obat:"
-                android:textStyle="bold"
-                android:textColor="@color/text_dark" />
-
-            <LinearLayout
-                android:id="@+id/recommendationList"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp" />
+                android:padding="12dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/ivMedicineIcon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_obat"
+                    android:contentDescription="Medicine Icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tint="@color/primary_blue" />
+                <TextView
+                    android:id="@+id/tvRecommendationLabel"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rekomendasi Obat:"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_dark"
+                    app:layout_constraintStart_toEndOf="@id/ivMedicineIcon"
+                    app:layout_constraintTop_toTopOf="@id/ivMedicineIcon"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMedicineIcon"
+                    />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/recommendationList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivMedicineIcon"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/white"
+                    android:padding="8dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

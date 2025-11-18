@@ -2,6 +2,7 @@ package com.example.medzone.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.util.Locale;
 
 public class HistoryAdapter extends ListAdapter<com.example.medzone.model.HistoryItem, HistoryAdapter.HistoryViewHolder> {
 
+    private static final String TAG = "HistoryAdapter";
     private final Context context;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -42,6 +44,9 @@ public class HistoryAdapter extends ListAdapter<com.example.medzone.model.Histor
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         com.example.medzone.model.HistoryItem item = getItem(position);
         if (item == null) return;
+
+        Log.d(TAG, "Binding item at position " + position + " ID=" + item.id + " keluhan='" + item.keluhan + "'");
+
         if (item.timestamp != null) {
             holder.tvDate.setText(dateFormat.format(item.timestamp));
             holder.tvTime.setText(timeFormat.format(item.timestamp));
@@ -49,11 +54,19 @@ public class HistoryAdapter extends ListAdapter<com.example.medzone.model.Histor
             holder.tvDate.setText("");
             holder.tvTime.setText("");
         }
-        holder.tvKeluhanLabel.setText("Keluhan:");
+        // show keluhan text in the TextView (user requested keluhan be shown here)
+        holder.tvKeluhanLabel.setText(item.keluhan != null ? item.keluhan : "");
 
-        // chips
+        // chips: prefer diagnosis from API; fallback to quickChips
         holder.chipGroupKeluhanItem.removeAllViews();
-        if (item.quickChips != null) {
+        if (item.diagnosis != null && !item.diagnosis.trim().isEmpty()) {
+            Chip chip = new Chip(context);
+            chip.setText(item.diagnosis);
+            chip.setClickable(false);
+            chip.setCheckable(false);
+            chip.setChipBackgroundColorResource(R.color.chip_bg_light);
+            holder.chipGroupKeluhanItem.addView(chip);
+        } else if (item.quickChips != null) {
             for (String chipText : item.quickChips) {
                 Chip chip = new Chip(context);
                 chip.setText(chipText);
@@ -67,14 +80,25 @@ public class HistoryAdapter extends ListAdapter<com.example.medzone.model.Histor
         // rekomendasi
         holder.recommendationList.removeAllViews();
         if (item.rekomendasi != null) {
-            for (com.example.medzone.model.Recommendation r : item.rekomendasi) {
+            Log.d(TAG, "Item has " + item.rekomendasi.size() + " recommendations");
+            for (int i = 0; i < item.rekomendasi.size(); i++) {
+                com.example.medzone.model.Recommendation r = item.rekomendasi.get(i);
+                Log.d(TAG, "  Binding rec[" + i + "]: name='" + r.name + "' dosis='" + r.dosis + "'");
+
                 View card = LayoutInflater.from(context).inflate(R.layout.item_history_rekomendation, holder.recommendationList, false);
                 TextView name = card.findViewById(R.id.tvRecName);
                 TextView dosis = card.findViewById(R.id.tvRecDosis);
-                name.setText(r.name != null ? r.name : "");
-                dosis.setText(r.dosis != null ? r.dosis : "");
+
+                String nameText = r.name != null ? r.name : "-";
+                String dosisText = r.dosis != null ? r.dosis : "-";
+
+                Log.d(TAG, "  Setting name='" + nameText + "' dosis='" + dosisText + "'");
+                name.setText(nameText);
+                dosis.setText(dosisText);
                 holder.recommendationList.addView(card);
             }
+        } else {
+            Log.w(TAG, "Item rekomendasi is null!");
         }
     }
 

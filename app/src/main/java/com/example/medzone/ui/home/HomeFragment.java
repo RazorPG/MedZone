@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
     private MaterialCardView resultCard;
     private TextView resultObatName, resultObatDosis;
     private HistoryViewModel historyViewModel;
+    private String selectedQuickChip = null; // track which quick chip was clicked
 
     public HomeFragment() { }
 
@@ -68,20 +69,32 @@ public class HomeFragment extends Fragment {
         resultObatName = view.findViewById(R.id.result_obat_name);
         resultObatDosis = view.findViewById(R.id.result_obat_dosis);
 
-        // Chip click behavior (same as previous)
+        // Chip click behavior: set inputKeluhan and track selected quick chip
         if (chipGroupKeluhan != null && inputKeluhan != null) {
             for (int i = 0; i < chipGroupKeluhan.getChildCount(); i++) {
                 View child = chipGroupKeluhan.getChildAt(i);
                 if (child instanceof Chip) {
                     Chip chip = (Chip) child;
+                    chip.setCheckable(true);
                     chip.setOnClickListener(v -> {
                         String current = inputKeluhan.getText() == null ? "" : inputKeluhan.getText().toString();
                         String chipText = chip.getText() == null ? "" : chip.getText().toString();
-                        if (current.equals(chipText)) {
+
+                        if (current.equals(chipText) && chip.isChecked()) {
+                            // If clicking the same checked chip, deselect
+                            chip.setChecked(false);
                             inputKeluhan.setText("");
+                            selectedQuickChip = null;
                         } else {
+                            // Uncheck other chips
+                            for (int j = 0; j < chipGroupKeluhan.getChildCount(); j++) {
+                                View other = chipGroupKeluhan.getChildAt(j);
+                                if (other instanceof Chip) ((Chip) other).setChecked(false);
+                            }
+                            chip.setChecked(true);
                             inputKeluhan.setText(chipText);
                             inputKeluhan.setSelection(inputKeluhan.getText().length());
+                            selectedQuickChip = chipText;
                         }
                     });
                 }
@@ -103,6 +116,17 @@ public class HomeFragment extends Fragment {
                     if (!text.isEmpty() && resultCard != null) {
                         resultCard.setVisibility(View.GONE);
                     }
+                    // If user types manually, clear selected quick chip
+                    if (selectedQuickChip != null && !text.equals(selectedQuickChip)) {
+                        selectedQuickChip = null;
+                        // uncheck all chips
+                        if (chipGroupKeluhan != null) {
+                            for (int j = 0; j < chipGroupKeluhan.getChildCount(); j++) {
+                                View other = chipGroupKeluhan.getChildAt(j);
+                                if (other instanceof Chip) ((Chip) other).setChecked(false);
+                            }
+                        }
+                    }
                 }
             });
 
@@ -118,14 +142,14 @@ public class HomeFragment extends Fragment {
                 // Save keluhan for later
                 final String finalKeluhan = keluhan;
 
-                // Collect selected chips
+                // Collect selected quick chips (we only add if text equals keluhan)
                 List<String> quickChips = new ArrayList<>();
                 if (chipGroupKeluhan != null) {
                     for (int i = 0; i < chipGroupKeluhan.getChildCount(); i++) {
                         View child = chipGroupKeluhan.getChildAt(i);
                         if (child instanceof Chip) {
                             Chip chip = (Chip) child;
-                            if (chip.getText() != null && chip.getText().toString().equals(keluhan)) {
+                            if (chip.getText() != null && chip.getText().toString().equals(keluhan) && chip.isChecked()) {
                                 quickChips.add(chip.getText().toString());
                             }
                         }
@@ -151,17 +175,40 @@ public class HomeFragment extends Fragment {
                             btnSearchObat.setEnabled(true);
                             if (response.isSuccessful() && response.body() != null) {
                                 PredictionResponse resp = response.body();
+
+                                // Log raw response
+                                android.util.Log.d("HomeFragment", "API Response - Obat: '" + resp.getObat() + "' Dosis: '" + resp.getDosis() + "' Diagnosis: '" + resp.getDiagnosis() + "'");
+
                                 String obat = resp.getObat() == null ? "-" : resp.getObat();
                                 String dosis = resp.getDosis() == null ? "-" : resp.getDosis();
+
+                                android.util.Log.d("HomeFragment", "After fallback - Obat: '" + obat + "' Dosis: '" + dosis + "'");
+
                                 if (resultObatName != null) resultObatName.setText(obat);
                                 if (resultObatDosis != null) resultObatDosis.setText(dosis);
                                 if (resultCard != null) resultCard.setVisibility(View.VISIBLE);
+
+                                // Determine diagnosis to save: prefer selected quick chip over API diagnosis
+                                String apiDiagnosis = resp.getDiagnosis() == null ? "" : resp.getDiagnosis();
+                                String diagnosisToSave = (selectedQuickChip != null && !selectedQuickChip.isEmpty()) ? selectedQuickChip : apiDiagnosis;
 
                                 // ✅ Simpan ke local database (akan otomatis sync ke Firebase di background)
                                 List<Recommendation> rekomendasi = new ArrayList<>();
                                 Recommendation rec = new Recommendation(obat, dosis, "");
                                 rekomendasi.add(rec);
-                                historyViewModel.saveHistory(finalKeluhan, finalQuickChips, rekomendasi);
+
+                                android.util.Log.d("HomeFragment", "Saving recommendation - name: '" + rec.name + "' dosis: '" + rec.dosis + "'");
+
+                                historyViewModel.saveHistory(finalKeluhan, finalQuickChips, rekomendasi, diagnosisToSave);
+
+                                // reset selection after saving
+                                selectedQuickChip = null;
+                                if (chipGroupKeluhan != null) {
+                                    for (int j = 0; j < chipGroupKeluhan.getChildCount(); j++) {
+                                        View other = chipGroupKeluhan.getChildAt(j);
+                                        if (other instanceof Chip) ((Chip) other).setChecked(false);
+                                    }
+                                }
                             } else {
                                 if (resultObatName != null) resultObatName.setText("Gagal: respons tidak valid dari server");
                             }
