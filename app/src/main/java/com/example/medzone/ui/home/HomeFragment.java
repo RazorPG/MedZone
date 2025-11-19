@@ -1,6 +1,7 @@
 package com.example.medzone.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,16 +18,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.medzone.api.ApiClient;
 import com.example.medzone.api.ApiService;
 import com.example.medzone.api.PredictionResponse;
 import com.example.medzone.model.Recommendation;
 import com.example.medzone.viewmodel.HistoryViewModel;
+import com.example.medzone.utils.UserPreferences;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.example.medzone.R;
+import com.example.medzone.activities.AccountSettingsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONObject;
 
@@ -46,6 +54,10 @@ public class HomeFragment extends Fragment {
     private TextView resultObatName, resultObatDosis;
     private HistoryViewModel historyViewModel;
     private String selectedQuickChip = null; // track which quick chip was clicked
+    private ImageView profileIcon;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+    private UserPreferences userPrefs;
 
     public HomeFragment() { }
 
@@ -62,12 +74,32 @@ public class HomeFragment extends Fragment {
         // Initialize ViewModel
         historyViewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
 
+        // Initialize UserPreferences
+        userPrefs = new UserPreferences(requireContext());
+
         inputKeluhan = view.findViewById(R.id.inputKeluhan);
         chipGroupKeluhan = view.findViewById(R.id.chipGroupKeluhan);
         btnSearchObat = view.findViewById(R.id.btnSearchObat);
         resultCard = view.findViewById(R.id.resultCard);
         resultObatName = view.findViewById(R.id.result_obat_name);
         resultObatDosis = view.findViewById(R.id.result_obat_dosis);
+
+        // Profile icon and Firebase
+        profileIcon = view.findViewById(R.id.profileIcon);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // Load profile photo from cache or Firebase
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) loadProfilePhoto(user);
+
+        // Open account settings when profile icon clicked
+        if (profileIcon != null) {
+            profileIcon.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), AccountSettingsActivity.class);
+                startActivity(intent);
+            });
+        }
 
         // Chip click behavior: set inputKeluhan and track selected quick chip
         if (chipGroupKeluhan != null && inputKeluhan != null) {
@@ -227,5 +259,199 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Only refresh from Firebase if data is stale
+            if (userPrefs.needsRefresh()) {
+                loadProfilePhotoFromFirebase(user);
+            } else {
+                loadProfilePhotoFromCache();
+            }
+        }
+    }
+
+    private void loadProfilePhoto(FirebaseUser user) {
+        // Try cache first
+        if (userPrefs.hasUserData() && !userPrefs.needsRefresh()) {
+            loadProfilePhotoFromCache();
+        } else {
+            loadProfilePhotoFromFirebase(user);
+        }
+    }
+
+    /**
+     * Load profile photo from cache
+     */
+    private void loadProfilePhotoFromCache() {
+        String photoUrl = userPrefs.getUserPhotoUrl();
+        if (photoUrl != null && !photoUrl.isEmpty()) {
+            loadPhotoUrl(photoUrl, profileIcon);
+        } else {
+            profileIcon.setImageResource(R.drawable.ic_profil);
+            androidx.core.widget.ImageViewCompat.setImageTintList(profileIcon,
+                android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white)));
+        }
+    }
+
+    /**
+     * Load profile photo from Firebase
+     */
+    private void loadProfilePhotoFromFirebase(FirebaseUser user) {
+        String uid = user.getUid();
+        // Try Firestore users collection first
+        db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
+            String photoUrl = null;
+
+            if (documentSnapshot.exists()) {
+                photoUrl = documentSnapshot.getString("photoUrl");
+            }
+
+            // Fallback to FirebaseUser photo
+            if ((photoUrl == null || photoUrl.isEmpty()) && user.getPhotoUrl() != null) {
+                photoUrl = user.getPhotoUrl().toString();
+            }
+
+            // Update cache if different from current cache
+            String cachedPhotoUrl = userPrefs.getUserPhotoUrl();
+            if (photoUrl != null && !photoUrl.equals(cachedPhotoUrl)) {
+                // Photo changed, update cache
+                String name = userPrefs.getUserName();
+                String email = user.getEmail();
+                String phone = userPrefs.getUserPhone();
+                long joinDate = userPrefs.getJoinDate();
+
+                if (documentSnapshot.exists()) {
+                    String firestoreName = documentSnapshot.getString("name");
+                    if (firestoreName != null && !firestoreName.isEmpty()) {
+                        name = firestoreName;
+                    }
+                    String firestorePhone = documentSnapshot.getString("phone");
+                    if (firestorePhone != null && !firestorePhone.isEmpty()) {
+                        phone = firestorePhone;
+                    }
+                }
+
+                if (name == null || name.isEmpty()) {
+                    name = user.getDisplayName();
+                }
+                if (joinDate == 0 && user.getMetadata() != null) {
+                    joinDate = user.getMetadata().getCreationTimestamp();
+                }
+
+                userPrefs.saveUserData(uid, name, email, phone, photoUrl, joinDate);
+            }
+
+            // Load photo
+            if (photoUrl != null && !photoUrl.isEmpty()) {
+                loadPhotoUrl(photoUrl, profileIcon);
+            } else {
+                profileIcon.setImageResource(R.drawable.ic_profil);
+                androidx.core.widget.ImageViewCompat.setImageTintList(profileIcon,
+                    android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white)));
+            }
+        }).addOnFailureListener(e -> {
+            // If Firestore fails, try to load from cache
+            loadProfilePhotoFromCache();
+        });
+    }
+
+    /**
+     * Load photo from URL or Base64 data URI
+     */
+    private void loadPhotoUrl(String photoUrl, ImageView imageView) {
+        if (photoUrl == null || photoUrl.isEmpty()) {
+            imageView.setImageResource(R.drawable.ic_profil);
+            // Set tint putih untuk icon default
+            androidx.core.widget.ImageViewCompat.setImageTintList(imageView,
+                android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white)));
+            return;
+        }
+
+        // Check if it's a Base64 data URI
+        if (photoUrl.startsWith("data:image/")) {
+            try {
+                // Extract Base64 part
+                String base64String = photoUrl.substring(photoUrl.indexOf(",") + 1);
+                byte[] decodedBytes = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT);
+                android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+                if (bitmap != null) {
+                    // Apply circular crop to bitmap
+                    android.graphics.Bitmap circularBitmap = getCircularBitmap(bitmap);
+
+                    // PENTING: Hapus tint sebelum set foto profil asli
+                    androidx.core.widget.ImageViewCompat.setImageTintList(imageView, null);
+
+                    imageView.setImageBitmap(circularBitmap);
+                } else {
+                    imageView.setImageResource(R.drawable.ic_profil);
+                    // Set tint putih untuk icon default
+                    androidx.core.widget.ImageViewCompat.setImageTintList(imageView,
+                        android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white)));
+                }
+            } catch (Exception e) {
+                android.util.Log.e("HomeFragment", "Failed to decode Base64 image: " + e.getMessage());
+                imageView.setImageResource(R.drawable.ic_profil);
+                // Set tint putih untuk icon default
+                androidx.core.widget.ImageViewCompat.setImageTintList(imageView,
+                    android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white)));
+            }
+        } else {
+            // Regular URL, use Glide
+            try {
+                // Hapus tint sebelum load dengan Glide
+                androidx.core.widget.ImageViewCompat.setImageTintList(imageView, null);
+
+                Glide.with(requireContext())
+                    .load(photoUrl)
+                    .placeholder(R.drawable.ic_profil)
+                    .circleCrop()
+                    .into(imageView);
+            } catch (Exception e) {
+                android.util.Log.e("HomeFragment", "Failed to load image with Glide: " + e.getMessage());
+                imageView.setImageResource(R.drawable.ic_profil);
+                // Set tint putih untuk icon default
+                androidx.core.widget.ImageViewCompat.setImageTintList(imageView,
+                    android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white)));
+            }
+        }
+    }
+
+    /**
+     * Convert bitmap to circular shape
+     */
+    private android.graphics.Bitmap getCircularBitmap(android.graphics.Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int size = Math.min(width, height);
+
+        android.graphics.Bitmap output = android.graphics.Bitmap.createBitmap(size, size, android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas = new android.graphics.Canvas(output);
+
+        android.graphics.Paint paint = new android.graphics.Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+
+        // Draw circle
+        canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint);
+
+        // Use SRC_IN to keep only the circle part
+        paint.setXfermode(new android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+
+        // Calculate crop rect to center the image
+        int left = (width - size) / 2;
+        int top = (height - size) / 2;
+        android.graphics.Rect srcRect = new android.graphics.Rect(left, top, left + size, top + size);
+        android.graphics.Rect dstRect = new android.graphics.Rect(0, 0, size, size);
+
+        canvas.drawBitmap(bitmap, srcRect, dstRect, paint);
+
+        return output;
     }
 }

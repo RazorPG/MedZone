@@ -72,8 +72,16 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
+    // Firebase Storage (untuk upload foto profil)
+    implementation("com.google.firebase:firebase-storage")
+
     // ✅ Tambahkan Play Services Auth agar login Firebase tidak error
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // Glide untuk memuat gambar dengan mudah
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.androidx.swiperefreshlayout)
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)

@@ -88,9 +88,8 @@
                             android:background="@drawable/circle_bg"
                             android:backgroundTint="@color/primary_blue"
                             android:contentDescription="@string/app_logo_description"
-                            android:padding="@dimen/drawable_padding"
-                            android:src="@drawable/ic_profil"
-                            app:tint="@color/white" />
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_profil" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -188,7 +187,6 @@
                 android:paddingStart="@dimen/spacing_xlarge"
                 android:paddingTop="@dimen/spacing_medium"
                 android:paddingEnd="@dimen/spacing_xlarge"
-                android:paddingBottom="@dimen/nav_height"
                 app:layout_constraintTop_toBottomOf="@id/profileCard">
 
                 <!-- Menu items -->
@@ -268,9 +266,10 @@
                                 android:padding="@dimen/spacing_medium">
 
                                 <TextView
+                                    android:id="@+id/tvConsultationCount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="12"
+                                    android:text="0"
                                     android:textColor="@color/primary_blue"
                                     android:textSize="@dimen/text_size_h1" />
 
@@ -294,9 +293,10 @@
                                 android:padding="@dimen/spacing_medium">
 
                                 <TextView
+                                    android:id="@+id/tvMedicineCount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="8"
+                                    android:text="0"
                                     android:textColor="@color/primary_blue"
                                     android:textSize="@dimen/text_size_h1" />
 

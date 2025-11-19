@@ -33,7 +33,7 @@
     <string name="konsultasi_title">Konsultasi Keluhan Ringan</string>
     <string name="konsultasi_subtitle">Temukan obat yang tepat untuk Anda</string>
     <string name="apa_keluhan">Apa keluhan Anda?</string>
-    <string name="hint_input_keluhan">Tuliskan keluhanmu di sini... (contoh: sakit kepala, batuk, demam)</string>
+    <string name="hint_input_keluhan">Tuliskan keluhanmu di sini… (contoh: sakit kepala, batuk, demam)</string>
     <string name="rekomendasi_obat">Rekomendasi Obat:</string>
     <string name="btn_search_obat">Cari Obat yang Sesuai</string>
     <string name="warning_message">Perhatian: Rekomendasi ini bersifat informasi umum. Selalu konsultasikan dengan dokter atau apoteker sebelum mengonsumsi obat.</string>
@@ -71,6 +71,29 @@
     <string name="stats_consultations">Konsultasi</string>
     <string name="stats_medicines">Obat</string>
     <string name="logout">Keluar</string>
-    <string name="menu_placeholder"></string>
-    <string name="empty"></string>
+
+    <!-- Defaults and placeholders -->
+    <string name="default_user">Pengguna</string>
+    <string name="phone_not_available">Nomor tidak tersedia</string>
+    <string name="joined_since">Bergabung sejak\n%s</string>
+
+    <!-- Account settings strings -->
+    <string name="profile_photo_desc">Foto Profil</string>
+    <string name="action_change_photo">Ubah Foto</string>
+    <string name="label_phone">Nomor Telepon</string>
+    <string name="hint_phone">08xxxxxxxxxx</string>
+    <string name="btn_save">Simpan</string>
+
+    <!-- Messages -->
+    <string name="choose_photo_title">Pilih foto</string>
+    <string name="name_required">Nama lengkap diperlukan</string>
+    <string name="saving">Menyimpan...</string>
+    <string name="profile_saved">Profil berhasil disimpan</string>
+    <string name="failed_save">Gagal menyimpan: %s</string>
+    <string name="error_upload_photo">Gagal mengunggah foto: %s</string>
+    <string name="error_update_profile">Gagal memperbarui profil: %s</string>
+    <string name="loading_recommendation">Memuat rekomendasi...</string>
+    <string name="error_invalid_response">Gagal: respons tidak valid dari server</string>
+    <string name="error_call_api">Gagal memanggil API: %s</string>
+    <string name="exception_message">Exception: %s</string>
 </resources>

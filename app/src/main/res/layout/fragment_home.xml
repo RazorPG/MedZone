@@ -46,9 +46,9 @@
 
         <ImageView
             android:id="@+id/profileIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/drawable_padding"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="2dp"
             android:src="@drawable/ic_profil"
             android:contentDescription="@string/app_logo_description"
             android:scaleType="centerCrop"
