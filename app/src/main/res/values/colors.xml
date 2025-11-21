@@ -37,5 +37,12 @@
     <color name="warning_bg">#FEF3C7</color>
     <color name="warning_text">#92400E</color>
 
+    <!-- Forgot Password colors -->
+    <color name="gray_light">#E5E7EB</color>
+    <color name="gray_medium">#9CA3AF</color>
+    <color name="blue_light">#E3F2FD</color>
+    <color name="step_line_active">#3A8DFF</color>
+    <color name="step_line_inactive">#E5E7EB</color>
+
     <!-- NOTE: nav_icon_color is defined as a selector in res/color/nav_icon_color.xml -->
 </resources>

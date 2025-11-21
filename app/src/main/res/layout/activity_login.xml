@@ -91,11 +91,13 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/txtForgotPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:text="@string/forgot_password"
-        android:textAlignment="textEnd"
+        android:focusable="true"
+        android:clickable="true"
         android:textColor="@color/primary_blue" />
 
     <androidx.appcompat.widget.AppCompatButton

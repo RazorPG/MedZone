@@ -48,11 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.inputPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtRegisterHere = findViewById(R.id.txtRegisterHere);
+        TextView txtForgotPassword = findViewById(R.id.txtForgotPassword);
 
         btnLogin.setOnClickListener(v -> loginUser());
         txtRegisterHere.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             finish();
+        });
+        txtForgotPassword.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
         });
     }
 

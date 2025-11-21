@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">MedZone</string>
 
+    <string name="forgot_title">Lupa Kata Sandi?</string>
+    <string name="forgot_subtitle">Masukkan email Anda dan kami akan mengirimkan link untuk mengganti kata sandi</string>
+    <string name="send_reset_link">Kirim Link Reset</string>
+
     <!-- Login screen -->
     <string name="login_welcome">Selamat Datang di MedZone</string>
     <string name="login_subtitle">Temukan Obat yang tepat untuk Keluhan Anda</string>
@@ -92,8 +96,13 @@
     <string name="failed_save">Gagal menyimpan: %s</string>
     <string name="error_upload_photo">Gagal mengunggah foto: %s</string>
     <string name="error_update_profile">Gagal memperbarui profil: %s</string>
+    <string name="sending">Mengirim...</string>
+    <string name="failed_send_link">Gagal mengirim link reset: %s</string>
     <string name="loading_recommendation">Memuat rekomendasi...</string>
     <string name="error_invalid_response">Gagal: respons tidak valid dari server</string>
     <string name="error_call_api">Gagal memanggil API: %s</string>
     <string name="exception_message">Exception: %s</string>
+    <string name="reset_sent">Link reset password telah dikirim ke email Anda! Cek inbox/spam.</string>
+    <string name="lock_desc">Kunci</string>
+    <string name="back">kembali</string>
 </resources>

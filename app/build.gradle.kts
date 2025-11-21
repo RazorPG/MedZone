@@ -48,6 +48,22 @@ android {
             )
         }
     }
+
+    // Packaging options untuk resolve conflict JavaMail dependencies
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/NOTICE.md",
+                "META-INF/LICENSE.md",
+                "META-INF/DEPENDENCIES",
+                "META-INF/NOTICE",
+                "META-INF/LICENSE",
+                "META-INF/notice.txt",
+                "META-INF/license.txt"
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -78,10 +94,15 @@ dependencies {
     // ✅ Tambahkan Play Services Auth agar login Firebase tidak error
     implementation("com.google.android.gms:play-services-auth:21.2.0")
 
+    // Firebase Functions (client) - untuk memanggil callable function
+    implementation("com.google.firebase:firebase-functions")
+
     // Glide untuk memuat gambar dengan mudah
     implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation(libs.androidx.swiperefreshlayout)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+    // (dihapus) JavaMail API karena pengiriman email sekarang via SendGrid HTTP API
 
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
