@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <!-- Allow cleartext only for the specific IP used by your API -->
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">192.168.4.70</domain>
-    </domain-config>
+    <!-- PRODUCTION: For release builds, restrict cleartext to specific domains -->
+    <!-- For debug builds, the debug variant will override this with permissive settings -->
 
-    <!-- Trust system certificates for Gmail SMTP (SSL/TLS) -->
-    <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">smtp.gmail.com</domain>
-        <domain includeSubdomains="true">gmail.com</domain>
-        <trust-anchors>
-            <certificates src="system" />
-        </trust-anchors>
-    </domain-config>
+    <!-- Option 1: Allow cleartext for local development IPs (uncomment and update as needed) -->
+    <!-- <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">192.168.1.1</domain>
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config> -->
 
-    <!-- Default: use system certificates for SSL/TLS -->
-    <base-config cleartextTrafficPermitted="false">
-        <trust-anchors>
-            <certificates src="system" />
-        </trust-anchors>
-    </base-config>
+    <!-- Option 2: Allow all cleartext (less secure, only for development) -->
+    <base-config cleartextTrafficPermitted="true" />
+
+    <!-- RECOMMENDATION: For production release, set cleartextTrafficPermitted="false" and use HTTPS -->
 </network-security-config>

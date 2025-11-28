@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_medium"
+    android:background="@drawable/button_rounded"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="@dimen/spacing_small">
+
+    <TextView
+        android:id="@+id/tvHistoryMessageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_recommendation_title"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_normal"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvHistoryMessageBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/no_recommendation_body"
+        android:textColor="@color/muted_text"
+        android:textSize="@dimen/text_size_small"
+        android:lineSpacingExtra="2dp" />
+
+</LinearLayout>

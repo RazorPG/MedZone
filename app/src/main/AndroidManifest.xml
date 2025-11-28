@@ -33,6 +33,7 @@
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.AccountSettingsActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
+        <activity android:name=".activities.HelpSupportActivity" />
 
         <!-- FileProvider for temporary file sharing with Firebase upload -->
         <provider

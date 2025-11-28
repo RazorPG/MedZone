@@ -1,42 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:padding="16dp">
+    android:background="@drawable/gradient_background">
 
-    <LinearLayout
+    <!-- Fixed Header Section with Gradient Background -->
+    <RelativeLayout
+        android:id="@+id/headerSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentTop="true"
+        android:background="@drawable/topbar_home"
+        android:padding="16dp"
+        android:elevation="4dp">
 
+        <!-- Back Button -->
         <ImageView
-            android:id="@+id/imgProfile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_profil"
-            android:contentDescription="@string/profile_photo_desc"
-            android:scaleType="fitCenter"
-            android:background="@drawable/circle_bg"
-            android:backgroundTint="@color/primary_blue" />
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/back_button"
+            app:tint="@color/white" />
 
-        <Button
-            android:id="@+id/btnChangePhoto"
+        <TextView
+            android:id="@+id/tvBackLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:text="@string/action_change_photo" />
+            android:layout_toEndOf="@id/btnBack"
+            android:layout_marginStart="12dp"
+            android:text="@string/back_text"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <!-- Full name label and input styled like Login -->
-        <TextView
+        <!-- Content Container with Icon and Text -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/label_fullname"
-            android:textColor="@color/gray_dark" />
+            android:layout_below="@id/btnBack"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Settings Icon Circle -->
+            <ImageView
+                android:id="@+id/iconSettings"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="12dp"
+                android:background="@drawable/circle_bg"
+                android:backgroundTint="#74EFF6FF"
+                android:src="@drawable/ic_setting"
+                app:tint="@color/white"
+                android:contentDescription="@string/settings_account" />
+
+            <!-- Text Container -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeaderTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_account"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvHeaderSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/account_settings_subtitle"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:alpha="0.9" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Scrollable Content Below Header -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerSection"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Profile Photo Card with White Background -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center">
+
+                    <!-- Profile Photo with Camera Icon -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <ImageView
+                            android:id="@+id/imgProfile"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/ic_profil_v2"
+                            android:contentDescription="@string/profile_photo_desc"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/circle_bg"
+                          />
+
+                        <!-- Camera Icon Badge -->
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_alignEnd="@id/imgProfile"
+                            android:layout_alignBottom="@id/imgProfile"
+                            android:layout_marginEnd="-4dp"
+                            android:layout_marginBottom="-4dp"
+                            android:src="@drawable/ic_camera"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="@color/white"
+                            android:padding="6dp"
+                            android:elevation="4dp"
+                            android:contentDescription="@string/action_change_photo"
+                            app:tint="@color/primary_blue" />
+                    </RelativeLayout>
+
+                    <!-- Change Photo Button -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnChangePhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="10dp"
+                        android:background="@drawable/button_rounded"
+                        android:text="@string/action_change_photo"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Form Fields Section with Padding -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="24dp">
+
+            <!-- Full name label and input styled like Login -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/label_fullname"
+                android:textColor="@color/gray_dark" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -90,10 +235,11 @@
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/drawable_padding"
                 android:textColorHint="@color/hint_color"
-                android:enabled="true"
                 android:focusable="false"
                 android:cursorVisible="false"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:alpha="0.6"
+                android:textColor="@color/muted_text" />
 
         </androidx.cardview.widget.CardView>
 
@@ -129,23 +275,35 @@
 
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btnSave"
+        <!-- Button + spinner container -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/btn_save" />
+            android:layout_marginTop="16dp">
 
-        <!-- Progress indicator -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"
-            android:indeterminate="true" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_rounded"
+                android:text="@string/btn_save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_button"
+                android:textStyle="bold" />
 
-    </LinearLayout>
-</ScrollView>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_marginEnd="16dp"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

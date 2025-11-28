@@ -100,16 +100,33 @@
         android:clickable="true"
         android:textColor="@color/primary_blue" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin"
+    <!-- Button + spinner container -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:background="@drawable/button_rounded"
-        android:text="@string/btn_masuk"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_button"
-        android:textStyle="bold" />
+        android:layout_marginTop="@dimen/spacing_large">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_rounded"
+            android:text="@string/btn_masuk"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_button"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progress_login"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="16dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

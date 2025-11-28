@@ -61,6 +61,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
 
+        // Initialize views
+        ImageView btnBack = findViewById(R.id.btnBack);
         imgProfile = findViewById(R.id.imgProfile);
         btnChangePhoto = findViewById(R.id.btnChangePhoto);
         etFullName = findViewById(R.id.etFullName);
@@ -68,6 +70,11 @@ public class AccountSettingsActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         btnSave = findViewById(R.id.btnSave);
         progressBar = findViewById(R.id.progressBar);
+
+        // Setup back button
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -369,32 +376,17 @@ public class AccountSettingsActivity extends AppCompatActivity {
         } catch (java.io.FileNotFoundException fnf) {
             progressBar.setVisibility(View.GONE);
             btnSave.setEnabled(true);
-            android.util.Log.e("AccountSettings", "Selected image not found: " + fnf.getMessage());
+            android.util.Log.e("AccountSettings", "Selected image not found", fnf);
             Toast.makeText(this, "File tidak ditemukan untuk diunggah", Toast.LENGTH_LONG).show();
         } catch (Exception ex) {
             progressBar.setVisibility(View.GONE);
             btnSave.setEnabled(true);
-            // Log detail tanpa toString() yang tidak perlu
+            // Log detail tanpa menampilkan pesan mentah ke pengguna
             android.util.Log.e("AccountSettings", "Unexpected error reading image", ex);
-            showUploadFailedDialog(ex.getMessage(), name, phone);
+            showUploadFailedDialog(null, name, phone);
         } finally {
             try { if (is != null) is.close(); } catch (Exception ignore) {}
         }
-    }
-
-    private void showUploadFailedDialog(String errorMessage, String name, String phone) {
-        String msg = errorMessage == null ? getString(R.string.error_upload_photo, "") : errorMessage;
-        new androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle("Gagal Mengunggah Foto")
-                .setMessage(getString(R.string.error_upload_photo, msg))
-                .setPositiveButton("Simpan tanpa foto", (dialog, which) -> updateUserProfile(name, phone, null))
-                .setNegativeButton("Coba lagi", (dialog, which) -> {
-                    progressBar.setVisibility(View.VISIBLE);
-                    btnSave.setEnabled(false);
-                    uploadImageAndSave(name, phone);
-                })
-                .setNeutralButton("Batal", (dialog, which) -> dialog.dismiss())
-                .show();
     }
 
     private void updateUserProfile(String name, String phone, @Nullable String photoUrl) {
@@ -416,11 +408,10 @@ public class AccountSettingsActivity extends AppCompatActivity {
                         btnSave.setEnabled(true);
 
                         Exception e = task.getException();
-                        String msg = e != null ? e.getMessage() : "Tidak diketahui";
-                        android.util.Log.e("AccountSettings", "Failed to update Firebase Auth profile: " + msg, e);
+                        android.util.Log.e("AccountSettings", "Failed to update Firebase Auth profile", e);
                         Toast.makeText(
                                 AccountSettingsActivity.this,
-                                getString(R.string.error_update_profile, msg),
+                                getString(R.string.profile_update_failed),
                                 Toast.LENGTH_SHORT
                         ).show();
                         return;
@@ -472,11 +463,10 @@ public class AccountSettingsActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 btnSave.setEnabled(true);
 
-                                String msg = e != null ? e.getMessage() : "Tidak diketahui";
-                                android.util.Log.e("AccountSettings", "Failed to save to Firestore: " + msg, e);
+                                android.util.Log.e("AccountSettings", "Failed to save to Firestore", e);
                                 Toast.makeText(
                                         AccountSettingsActivity.this,
-                                        "Profil akun sudah diperbarui, tapi gagal menyinkronkan ke server: " + msg,
+                                        getString(R.string.profile_sync_failed),
                                         Toast.LENGTH_LONG
                                 ).show();
                             });
@@ -485,13 +475,27 @@ public class AccountSettingsActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     btnSave.setEnabled(true);
 
-                    String msg = e != null ? e.getMessage() : "Tidak diketahui";
-                    android.util.Log.e("AccountSettings", "Failed to update profile: " + msg, e);
+                    android.util.Log.e("AccountSettings", "Failed to update profile", e);
                     Toast.makeText(
                             AccountSettingsActivity.this,
-                            getString(R.string.error_update_profile, msg),
+                            getString(R.string.profile_update_failed),
                             Toast.LENGTH_SHORT
                     ).show();
                 });
+    }
+
+    private void showUploadFailedDialog(String errorMessage, String name, String phone) {
+        // Don't expose the raw errorMessage to users; use a generic message. Log already contains detail.
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Gagal Mengunggah Foto")
+                .setMessage(getString(R.string.upload_photo_failed_generic))
+                .setPositiveButton("Simpan tanpa foto", (dialog, which) -> updateUserProfile(name, phone, null))
+                .setNegativeButton("Coba lagi", (dialog, which) -> {
+                    progressBar.setVisibility(View.VISIBLE);
+                    btnSave.setEnabled(false);
+                    uploadImageAndSave(name, phone);
+                })
+                .setNeutralButton("Batal", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 }

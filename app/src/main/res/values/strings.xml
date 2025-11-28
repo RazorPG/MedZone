@@ -103,6 +103,75 @@
     <string name="error_call_api">Gagal memanggil API: %s</string>
     <string name="exception_message">Exception: %s</string>
     <string name="reset_sent">Link reset password telah dikirim ke email Anda! Cek inbox/spam.</string>
+
+    <!-- Empty state strings -->
+    <string name="empty_history_title">Belum Ada Riwayat Konsultasi</string>
+    <string name="empty_history_message">Anda belum melakukan konsultasi.\nMulai konsultasi pertama Anda untuk mendapatkan rekomendasi obat yang sesuai dengan keluhan Anda.</string>
+
+    <!-- Generic production-friendly error messages -->
+    <string name="error_generic">Terjadi kesalahan. Silakan coba lagi nanti.</string>
+    <string name="error_network">Tidak dapat terhubung ke server. Periksa koneksi dan coba lagi.</string>
+    <string name="profile_sync_failed">Profil disimpan secara lokal, namun gagal menyinkronkan ke server. Silakan coba lagi nanti.</string>
+    <string name="upload_photo_failed_generic">Gagal mengunggah foto. Coba lagi nanti atau simpan tanpa foto.</string>
+    <string name="profile_update_failed">Gagal memperbarui profil. Silakan coba lagi.</string>
     <string name="lock_desc">Kunci</string>
     <string name="back">kembali</string>
+    <string name="not_recommended">Tidak ada rekomendasi obat untuk keluhan ini. Coba masukkan keluhan lain atau konsultasikan dengan tenaga medis.</string>
+    <string name="no_recommendation_title">Tidak Ada Rekomendasi</string>
+    <string name="no_recommendation_body">Maaf, kami tidak dapat menemukan obat yang sesuai dengan keluhan ini. Coba gunakan kata kunci yang lebih spesifik.</string>
+
+    <!-- Help & Support strings -->
+    <string name="bantuan_dukungan">Bantuan &amp; Dukungan</string>
+    <string name="kami_siap_membantu">Kami siap membantu Anda</string>
+    <string name="hubungi_kami">Hubungi Kami</string>
+    <string name="panduan_penggunaan">Panduan Penggunaan</string>
+    <string name="informasi_penting">Informasi Penting</string>
+    <string name="faq_title">Pertanyaan Umum (FAQ)</string>
+
+    <!-- Contact Information -->
+    <string name="whatsapp_number">0812-3456-7890</string>
+    <string name="whatsapp_number_clean">6281234567890</string>
+    <string name="support_email">support@medzone.com</string>
+    <string name="phone_number">0812-3456-7890</string>
+    <string name="phone_number_clean">081234567890</string>
+
+    <!-- Panduan Penggunaan -->
+    <string name="cara_konsultasi">Cara konsultasi</string>
+    <string name="cara_konsultasi_desc">Masukkan keluhan Anda di halaman beranda</string>
+    <string name="rekomendasi_obat_title">Rekomendasi obat</string>
+    <string name="rekomendasi_obat_desc">Sistem akan memberikan saran obat yang sesuai</string>
+    <string name="riwayat_konsultasi_title">Riwayat konsultasi</string>
+    <string name="riwayat_konsultasi_desc">Lihat riwayat di menu History</string>
+
+    <!-- Informasi Penting -->
+    <string name="disclaimer">Disclaimer</string>
+    <string name="disclaimer_desc">Rekomendasi bersifat informasi umum, bukan diagnosis medis\nKonsultasi dokter\nSelalu konsultasikan dengan dokter untuk kondisi serius</string>
+    <string name="privasi_data">Privasi data</string>
+    <string name="privasi_data_desc">Data Anda dijaga kerahasiaannya</string>
+
+    <!-- FAQ Questions and Answers -->
+    <string name="faq_question_1">Apakah rekomendasi obat akurat?</string>
+    <string name="faq_answer_1">Rekomendasi kami berdasarkan database obat yang terpercaya, namun bersifat informasi umum. Selalu konsultasikan dengan dokter atau apoteker untuk diagnosis yang tepat.</string>
+
+    <string name="faq_question_2">Apakah data saya aman?</string>
+    <string name="faq_answer_2">Ya, kami menggunakan enkripsi dan standar keamanan tinggi untuk melindungi data pribadi Anda. Data tidak akan dibagikan ke pihak ketiga tanpa izin Anda.</string>
+
+    <string name="faq_question_3">Bagaimana cara mendapatkan rekomendasi obat?</string>
+    <string name="faq_answer_3">Cukup masukkan keluhan atau gejala Anda di halaman beranda, lalu sistem akan menganalisis dan memberikan rekomendasi obat yang sesuai beserta informasi dosis yang tepat.</string>
+
+    <string name="faq_question_4">Kapan harus ke dokter?</string>
+    <string name="faq_answer_4">Segera konsultasikan dengan dokter jika: gejala tidak membaik dalam 2-3 hari, gejala memburuk, demam tinggi tidak turun, atau jika ada tanda-tanda reaksi alergi obat.</string>
+
+    <!-- Accessibility & Icons -->
+    <string name="icon_help">Icon bantuan</string>
+    <string name="icon_chat">Icon chat</string>
+    <string name="icon_book">Icon buku</string>
+    <string name="arrow_forward">Panah maju</string>
+    <string name="expand_collapse">Expand/Collapse</string>
+    <string name="back_button">Tombol kembali</string>
+    <string name="back_text">Kembali</string>
+    <string name="contact_whatsapp">WhatsApp</string>
+    <string name="contact_email">Email</string>
+    <string name="contact_phone">Telepon</string>
+    <string name="account_settings_subtitle">Kelola informasi pribadi Anda</string>
 </resources>

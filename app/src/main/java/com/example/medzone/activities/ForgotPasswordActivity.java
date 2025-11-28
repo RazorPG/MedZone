@@ -71,7 +71,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, getString(R.string.failed_send_link, e.getMessage()), Toast.LENGTH_LONG).show();
+                    android.util.Log.e("ForgotPasswordActivity", "Failed to send reset email", e);
+                    Toast.makeText(this, getString(R.string.error_generic), Toast.LENGTH_LONG).show();
                     btnSendCode.setEnabled(true);
                     btnSendCode.setText(R.string.send_reset_link);
                 });

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- DEBUG BUILD: Allow cleartext for all domains during development -->
+    <!-- This overrides the main config to avoid changing IP addresses per network -->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
+

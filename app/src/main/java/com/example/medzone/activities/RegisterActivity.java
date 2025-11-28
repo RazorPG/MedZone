@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 })
                                 .addOnFailureListener(e -> {
                                     Log.e("REGISTER", "Firestore write failed", e);
-                                    Toast.makeText(this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, getString(R.string.error_generic), Toast.LENGTH_SHORT).show();
                                 });
                     } else {
                         // Registrasi gagal — tangkap semua jenis error
@@ -103,7 +103,8 @@ public class RegisterActivity extends AppCompatActivity {
                             } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
                                 Toast.makeText(this, "Format email tidak valid!", Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(this, "Registrasi gagal: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                android.util.Log.e("REGISTER", "Registration failed", e);
+                                Toast.makeText(this, getString(R.string.error_generic), Toast.LENGTH_LONG).show();
                             }
                             Log.e("REGISTER", "FirebaseAuth error", e);
                         } else {

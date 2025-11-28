@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
 
                 btnSearchObat.setEnabled(false);
                 if (resultCard != null) resultCard.setVisibility(View.VISIBLE);
-                if (resultObatName != null) resultObatName.setText("Memuat rekomendasi...");
+                if (resultObatName != null) resultObatName.setText(getString(R.string.loading_recommendation));
                 if (resultObatDosis != null) resultObatDosis.setText("");
 
                 // Save keluhan for later
@@ -208,6 +208,39 @@ public class HomeFragment extends Fragment {
                             if (response.isSuccessful() && response.body() != null) {
                                 PredictionResponse resp = response.body();
 
+                                // Parse keyakinan percentage (e.g., "25.80%" -> 25.80)
+                                String keyakinanStr = resp.getKeyakinan() == null ? "0" : resp.getKeyakinan().trim();
+                                double keyakinanPercent = 0.0;
+                                try {
+                                    // Remove '%' sign if present
+                                    keyakinanStr = keyakinanStr.replace("%", "").trim();
+                                    keyakinanPercent = Double.parseDouble(keyakinanStr);
+                                } catch (NumberFormatException e) {
+                                    android.util.Log.e("HomeFragment", "Failed to parse keyakinan: " + keyakinanStr, e);
+                                }
+
+                                android.util.Log.d("HomeFragment", "Keyakinan: " + keyakinanPercent + "%");
+
+                                // Jika keyakinan di bawah 10%, tidak tampilkan rekomendasi obat dan diagnosis
+                                if (keyakinanPercent < 10.0) {
+                                    if (resultObatName != null) resultObatName.setText(getString(R.string.not_recommended));
+                                    if (resultObatDosis != null) resultObatDosis.setText("");
+                                    if (resultCard != null) resultCard.setVisibility(View.VISIBLE);
+
+                                    // Simpan history TANPA diagnosis, rekomendasi, dan quickChips (agar tidak ada chip yang muncul di history)
+                                    historyViewModel.saveHistory(finalKeluhan, new ArrayList<>(), new ArrayList<>(), "");
+                                    android.util.Log.d("HomeFragment", "Saved history WITHOUT recommendations, diagnosis, and chips due to low confidence: " + keyakinanPercent + "%");
+
+                                    selectedQuickChip = null;
+                                    if (chipGroupKeluhan != null) {
+                                        for (int j = 0; j < chipGroupKeluhan.getChildCount(); j++) {
+                                            View other = chipGroupKeluhan.getChildAt(j);
+                                            if (other instanceof Chip) ((Chip) other).setChecked(false);
+                                        }
+                                    }
+                                    return; // keluar lebih awal, jangan proses obat
+                                }
+
                                 // Log raw response
                                 android.util.Log.d("HomeFragment", "API Response - Obat: '" + resp.getObat() + "' Dosis: '" + resp.getDosis() + "' Diagnosis: '" + resp.getDiagnosis() + "'");
 
@@ -242,20 +275,22 @@ public class HomeFragment extends Fragment {
                                     }
                                 }
                             } else {
-                                if (resultObatName != null) resultObatName.setText("Gagal: respons tidak valid dari server");
+                                if (resultObatName != null) resultObatName.setText(getString(R.string.error_invalid_response));
                             }
                         }
 
                         @Override
                         public void onFailure(Call<PredictionResponse> call, Throwable t) {
                             btnSearchObat.setEnabled(true);
-                            if (resultObatName != null) resultObatName.setText("Gagal memanggil API: " + t.getMessage());
+                            android.util.Log.e("HomeFragment", "API call failed", t);
+                            if (resultObatName != null) resultObatName.setText(getString(R.string.error_network));
                         }
                     });
                 } catch (Exception e) {
                     btnSearchObat.setEnabled(true);
                     if (resultCard != null) resultCard.setVisibility(View.VISIBLE);
-                    if (resultObatName != null) resultObatName.setText("Exception: " + e.getMessage());
+                    android.util.Log.e("HomeFragment", "Unexpected error while preparing API call", e);
+                    if (resultObatName != null) resultObatName.setText(getString(R.string.error_generic));
                 }
             });
         }
@@ -429,29 +464,19 @@ public class HomeFragment extends Fragment {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int size = Math.min(width, height);
-
         android.graphics.Bitmap output = android.graphics.Bitmap.createBitmap(size, size, android.graphics.Bitmap.Config.ARGB_8888);
         android.graphics.Canvas canvas = new android.graphics.Canvas(output);
-
         android.graphics.Paint paint = new android.graphics.Paint();
         paint.setAntiAlias(true);
         paint.setFilterBitmap(true);
         paint.setDither(true);
-
-        // Draw circle
         canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint);
-
-        // Use SRC_IN to keep only the circle part
         paint.setXfermode(new android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
-
-        // Calculate crop rect to center the image
         int left = (width - size) / 2;
         int top = (height - size) / 2;
         android.graphics.Rect srcRect = new android.graphics.Rect(left, top, left + size, top + size);
         android.graphics.Rect dstRect = new android.graphics.Rect(0, 0, size, size);
-
         canvas.drawBitmap(bitmap, srcRect, dstRect, paint);
-
         return output;
     }
 }

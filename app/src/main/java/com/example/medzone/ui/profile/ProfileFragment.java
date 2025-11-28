@@ -259,11 +259,15 @@ public class ProfileFragment extends Fragment {
         // Observe history data from ViewModel
         historyViewModel.getHistories().observe(getViewLifecycleOwner(), historyList -> {
             if (historyList != null) {
-                int count = historyList.size();
-                // Update consultation count
-                tvConsultationCount.setText(String.valueOf(count));
-                // Update medicine count (same as consultation count for now)
-                tvMedicineCount.setText(String.valueOf(count));
+                int consultationCount = historyList.size();
+                int medicineCount = 0;
+                for (var item : historyList) {
+                    if (item != null && item.rekomendasi != null) {
+                        medicineCount += item.rekomendasi.size();
+                    }
+                }
+                tvConsultationCount.setText(String.valueOf(consultationCount));
+                tvMedicineCount.setText(String.valueOf(medicineCount));
             } else {
                 tvConsultationCount.setText("0");
                 tvMedicineCount.setText("0");
@@ -464,9 +468,11 @@ public class ProfileFragment extends Fragment {
             TextView title = menuHelp.findViewById(R.id.menuTitle);
             if (icon != null) icon.setImageResource(R.drawable.ic_help);
             if (title != null) title.setText(R.string.settings_help);
-            menuHelp.setOnClickListener(v ->
-                    Toast.makeText(requireContext(), "Bantuan - Coming Soon", Toast.LENGTH_SHORT).show()
-            );
+            menuHelp.setOnClickListener(v -> {
+                // Open HelpSupportActivity
+                Intent intent = new Intent(requireContext(), com.example.medzone.activities.HelpSupportActivity.class);
+                startActivity(intent);
+            });
         }
     }
 
@@ -500,7 +506,8 @@ public class ProfileFragment extends Fragment {
             // Redirect to login and clear activity stack
             redirectToLogin();
         } catch (Exception e) {
-            Toast.makeText(requireContext(), "Gagal keluar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            android.util.Log.e("ProfileFragment", "Logout failed", e);
+            Toast.makeText(requireContext(), getString(R.string.error_generic), Toast.LENGTH_SHORT).show();
         }
     }
 

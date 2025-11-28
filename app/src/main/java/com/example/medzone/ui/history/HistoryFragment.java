@@ -22,6 +22,8 @@ public class HistoryFragment extends Fragment {
 
     private HistoryViewModel viewModel;
     private HistoryAdapter adapter;
+    private View emptyStateView;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -33,10 +35,12 @@ public class HistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView rv = view.findViewById(R.id.rvHistory);
-        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView = view.findViewById(R.id.rvHistory);
+        emptyStateView = view.findViewById(R.id.emptyStateView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new HistoryAdapter(requireContext());
-        rv.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
         // Use activity-scoped ViewModel so HomeFragment and HistoryFragment share the same instance
         viewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
@@ -48,6 +52,15 @@ public class HistoryFragment extends Fragment {
         viewModel.getHistories().observe(getViewLifecycleOwner(), list -> {
             if (list == null) list = new ArrayList<>();
             adapter.submitList(list);
+
+            // Show empty state if list is empty, otherwise show recycler view
+            if (list.isEmpty()) {
+                emptyStateView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            } else {
+                emptyStateView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
         });
 
         // ✅ Auto-fetch dari Firebase dan merge ke lokal apabila berbeda

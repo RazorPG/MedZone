@@ -26,6 +26,7 @@
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_button">14sp</dimen>
     <dimen name="text_size_terms">12sp</dimen>
+    <dimen name="text_size_small">13sp</dimen>
 
     <!-- Drawable padding -->
     <dimen name="drawable_padding">12dp</dimen>

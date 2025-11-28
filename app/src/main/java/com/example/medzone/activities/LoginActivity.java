@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private Button btnLogin;
+    private ProgressBar progressLogin;
     private TextView txtRegisterHere;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        progressLogin = findViewById(R.id.progress_login);
         txtRegisterHere = findViewById(R.id.txtRegisterHere);
         TextView txtForgotPassword = findViewById(R.id.txtForgotPassword);
 
@@ -69,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Disable button and show spinner to avoid duplicate clicks
+        btnLogin.setEnabled(false);
+        progressLogin.setVisibility(View.VISIBLE);
+
         auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(result -> {
                     Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show();
@@ -79,10 +87,20 @@ public class LoginActivity extends AppCompatActivity {
                         saveUserDataToCache(user);
                     }
 
+                    // Re-enable and hide spinner (optional, since we are leaving activity)
+                    btnLogin.setEnabled(true);
+                    progressLogin.setVisibility(View.GONE);
+
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Login gagal: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    // Re-enable button and hide spinner on failure
+                    btnLogin.setEnabled(true);
+                    progressLogin.setVisibility(View.GONE);
+                    android.util.Log.e("LoginActivity", "Login failed", e);
+                    Toast.makeText(this, getString(R.string.error_generic), Toast.LENGTH_SHORT).show();
+                });
     }
 
     /**

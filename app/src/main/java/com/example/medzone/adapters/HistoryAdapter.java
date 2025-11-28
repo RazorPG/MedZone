@@ -104,6 +104,15 @@ public class HistoryAdapter extends ListAdapter<com.example.medzone.model.Histor
         } else {
             Log.w(TAG, "Item rekomendasi is null!");
         }
+        // If rekomendasi is empty or null, show a friendly message
+        if (item.rekomendasi == null || item.rekomendasi.isEmpty()) {
+            View msgView = LayoutInflater.from(context).inflate(R.layout.item_history_message, holder.recommendationList, false);
+            TextView tvTitle = msgView.findViewById(R.id.tvHistoryMessageTitle);
+            TextView tvBody = msgView.findViewById(R.id.tvHistoryMessageBody);
+            tvTitle.setText(context.getString(R.string.no_recommendation_title));
+            tvBody.setText(context.getString(R.string.no_recommendation_body));
+            holder.recommendationList.addView(msgView);
+        }
     }
 
     // Helper to explicitly apply chip style values programmatically (fallback)
