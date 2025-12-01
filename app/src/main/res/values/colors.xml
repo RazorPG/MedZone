@@ -45,4 +45,5 @@
     <color name="step_line_inactive">#E5E7EB</color>
 
     <!-- NOTE: nav_icon_color is defined as a selector in res/color/nav_icon_color.xml -->
+    <color name="blue_translucent_74">#74EFF6FF</color>
 </resources>
